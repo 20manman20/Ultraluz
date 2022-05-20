@@ -1,0 +1,119 @@
+
+switch (en_state) {
+    case en_st.idle:
+			if _col_damage_area {
+				alarm[0]	= 60
+				en_state	= en_st.shield
+				var _dir	= sign(_col_damage_area.x-x)
+				shield		= instance_create_depth(x+16*_dir,y,depth,o_en_shield)
+				hdir		= _dir
+			} else if (sign(x-o_player.x) == -hdir) && distance_to_object(o_player) < 128 && alarm[1] == -1 {
+				alarm[3]	= 40
+				image_index	= 0
+				en_state	= en_st.preatk
+				alarm[0]	= 40
+			}
+			
+			spd[h]			= 0
+			sprite_index	= s_en_00_idle
+			image_xscale	= hdir
+			
+			
+        break
+	case en_st.walk:
+			if distance_to_object(_col_damage_area) < 32 {
+				alarm[0]	= 60
+				en_state	= en_st.shield
+				var _dir	= sign(_col_damage_area.x-x)
+				shield		= instance_create_depth(x+16*_dir,y,depth,o_en_shield)
+				hdir		= _dir
+			} else if (sign(x-o_player.x) == -hdir) && distance_to_object(o_player) < 96 && alarm[1] == -1 {
+				alarm[3]	= 40
+				image_index	= 0
+				en_state	= en_st.preatk
+				alarm[0]	= 40
+			}
+	
+			var _fall	= !place_meeting(x+18*hdir,y+1,o_solid)
+			
+			if _fall hdir	*= -1
+			
+			spd[h]			= hdir*spd_max[h]
+			sprite_index	= s_en_00_walk
+			image_xscale	= hdir
+			
+			
+        break
+	case en_st.shield:
+			spd[h]			= 0
+			sprite_index	= s_en_00_shield
+			image_xscale	= hdir
+			
+		break
+	case en_st.preatk:
+			spd[h]			= 0
+			sprite_index	= s_en_00_atk
+			image_xscale	= hdir
+			
+        break
+	case en_st.atk:
+			var _atk			= instance_create_depth(x*hdir,y,depth,o_en_00_atk)
+			_atk.image_xscale	= hdir
+			_atk.en_id			= 0
+			spd[h]			= 0
+			sprite_index	= s_en_00_atk
+			image_xscale	= hdir
+			
+        break
+	case en_st.damage:
+			alarm[0]		= -1
+			if animation_end() {
+				en_state	= en_st.idle
+			}
+			spd[h]			= 0
+			sprite_index	= s_en_00_dmg
+			image_xscale	= hdir
+		break
+}
+
+
+
+
+
+
+switch (en_state) {
+    case en_st.idle:
+		alarm[0]	= random_range(100,200)
+		var _ran	= choose(0,1)
+		if _ran {
+			en_state	= en_st.walk
+			image_index	= 0
+		} else hdir*=-1
+        break
+	case en_st.walk:
+		alarm[0]	= random_range(120,240)
+		var _ran	= choose(0,1)
+		if _ran {
+			en_state	= en_st.idle
+			image_index	= 0
+		} else hdir*=-1
+        break
+	case en_st.preatk:
+		atk_dash		= linear_int(128,7,16,2,distance_to_object(o_player))
+		en_state	= en_st.atk
+		alarm[0]	= 20
+		break
+	case en_st.atk:
+		alarm[1]	= atk_cooldown
+		en_state	= en_st.idle
+		break
+	case en_st.shield:
+		alarm[1]	= atk_cooldown/2
+		instance_destroy(shield)
+		en_state	= en_st.idle
+		alarm[0]	= random_range(100,200)
+		break
+	case en_st.damage:
+		en_state	= en_st.idle
+		break
+}
