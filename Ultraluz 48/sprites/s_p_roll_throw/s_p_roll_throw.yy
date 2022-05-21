@@ -89,8 +89,8 @@
   ],
   "nineSlice": null,
   "parent": {
-    "name": "Shaders",
-    "path": "folders/Shaders.yy",
+    "name": "Player",
+    "path": "folders/Player.yy",
   },
   "resourceVersion": "1.0",
   "name": "s_p_roll_throw",
