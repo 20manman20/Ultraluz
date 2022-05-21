@@ -1,7 +1,7 @@
 {
   "spriteId": {
-    "name": "s_p_atk_mask",
-    "path": "sprites/s_p_atk_mask/s_p_atk_mask.yy",
+    "name": "mask_s_p",
+    "path": "sprites/mask_s_p/mask_s_p.yy",
   },
   "solid": false,
   "visible": false,

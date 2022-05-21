@@ -19,4 +19,9 @@ draw_sprite_ext(sprite_index,image_index,x,y,hdir*i_scale[h],i_scale[v],image_an
 
 gpu_set_fog(false, c_white, 0, 1)
 
-//draw_text(x,y-64,x)
+draw_text(x,y-64,round(image_index)==0)
+draw_text(x,y-74,coyote_atk > 0)
+
+if p_state	== p_st.swing {
+	draw_line(rope[h],rope[v],grapple[h],grapple[v])
+}

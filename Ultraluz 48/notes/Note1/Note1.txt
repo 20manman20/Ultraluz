@@ -1,4 +1,47 @@
+if alarm[1] > -1 {
+	var _atk	= instance_create_depth(x+8,y,depth,o_bullet)
+	_atk.image_xscale	= hdir
+	sprite_index	= s_p_atk_01
+	p_state		= p_st.atk_01
+} else {
+	var _atk	= instance_create_depth(x+8,y,depth,o_bullet)
+	_atk.image_xscale	= hdir
+	p_state		= p_st.atk_00
+	sprite_index	= s_p_atk_00
+}
+image_index	= 0
 
+if alarm[1] > -1 {
+	var _atk	= instance_create_depth(x+8,y,depth,o_bullet)
+	_atk.image_xscale	= hdir
+	sprite_index	= s_p_atk_01
+	p_state		= p_st.atk_01
+} else {
+	var _atk	= instance_create_depth(x+8,y,depth,o_bullet)
+	_atk.image_xscale	= hdir
+	p_state		= p_st.atk_00
+	sprite_index	= s_p_atk_00
+}
+image_index	= 0
+			
+
+
+if alarm[1] > -1 {
+	var _atk	= instance_create_depth(x+8,y,depth,o_bullet)
+	_atk.image_xscale	= hdir
+	sprite_index	= s_p_atk_01
+	p_state		= p_st.atk_01
+} else {
+	var _atk	= instance_create_depth(x+8,y,depth,o_bullet)
+	_atk.image_xscale	= hdir
+	p_state		= p_st.atk_00
+	sprite_index	= s_p_atk_00
+}
+image_index	= 0
+
+
+
+			
 switch (en_state) {
     case en_st.idle:
 			if _col_damage_area {
