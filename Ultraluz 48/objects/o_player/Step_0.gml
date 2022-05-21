@@ -20,7 +20,7 @@ spd_final[v]	= spd[v] + spd_push[v]
 spd_push[h]	= approach(spd_push[h],0,.2)
 spd_push[v]	= approach(spd_push[v],0,.2)
 
-repeat (abs(spd_final[h]*COL_TIME)) {
+repeat (abs(spd_final[h]*COL_TIME)*game_spd) {
 	if place_meeting(x+sign(spd_final[h]),y,o_solid) {
 		if p_state	== p_st.swing {
 			rope_angle	= point_direction(grapple[h],grapple[v],x,y)
@@ -31,7 +31,7 @@ repeat (abs(spd_final[h]*COL_TIME)) {
 	} else x += sign(spd_final[h])/COL_TIME
 }
 
-repeat (abs(spd_final[v]*COL_TIME)) {
+repeat (abs(spd_final[v]*COL_TIME)*game_spd) {
 	if place_meeting(x,y+sign(spd_final[v]),o_solid) {
 		spd[v]	= 0
 		if p_state	== p_st.swing {
@@ -113,7 +113,7 @@ switch (p_state) {
 			image_index	= 0
 			sprite_index	= s_p_roll_throw
 			spd[h]		= 0
-			spd_push[h]	= 6*hdir
+			spd[h]	= 6*hdir
 			
 		} else if spd[v] > -.3 {
 			p_state	= p_st.jump_fall
@@ -135,7 +135,7 @@ switch (p_state) {
 			image_index	= 0
 			sprite_index	= s_p_roll_throw
 			spd[h]		= 0
-			spd_push[h]	= 6*hdir
+			spd[h]	= 6*hdir
 		} else if animation_end() {
 			p_state		= p_st.fall
 			image_index	= 0
@@ -229,12 +229,8 @@ switch (p_state) {
 		event_gravity(true)
 		event_animation(s_p_roll_land,1)
 		
-		if key_dash_r spd_push[h]*=.5
-		
-		if image_index > 2 {
-			spd_push[0]*=1
-		}
-		
+		if key_dash_r spd_push[h]*=.3
+		image_speed	= 1
 		if animation_end() {
 			if hinput != 0 p_state	= p_st.run
 			else p_state	= p_st.idle
@@ -245,11 +241,7 @@ switch (p_state) {
 		event_gravity(true)
 		event_animation(s_p_roll_land64,1)
 		
-		if key_dash_r spd_push[h]*=.5
-		
-		if image_index > 2 {
-			spd_push[0]*=.9
-		}
+		if key_dash_r spd_push[h]*=.3
 		
 		if animation_end() {
 			if hinput != 0 p_state	= p_st.run
@@ -260,7 +252,7 @@ switch (p_state) {
 	case p_st.roll_throw:
 		event_gravity()
 		event_wall_hang()
-		event_hinput(false)
+		event_hinput(false,true,true,.15, .1)
 	
 		
 		if animation_end() {
@@ -276,9 +268,12 @@ switch (p_state) {
 		break
 	case p_st.roll:
 		event_gravity()
+		event_hinput(true,true,true,.2,.1)
 		event_wall_hang()
 		
 		sprite_index	= s_p_roll_land
+		
+		event_attack()
 		
 		if animation_end() {
 			if hinput != 0 p_state	= p_st.run
@@ -417,3 +412,4 @@ if p_health <= 10 {
 if coyote_atk > 0 {
 	coyote_atk--
 }
+

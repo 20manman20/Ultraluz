@@ -83,6 +83,7 @@
     {"id":{"name":"__SlideAll50","path":"sprites/__SlideAll50/__SlideAll50.yy",},"order":31,},
     {"id":{"name":"s_en_00_walk","path":"sprites/s_en_00_walk/s_en_00_walk.yy",},"order":2,},
     {"id":{"name":"sdsd_en_00_atk58","path":"sprites/sdsd_en_00_atk58/sdsd_en_00_atk58.yy",},"order":14,},
+    {"id":{"name":"s_gameplay","path":"sprites/s_gameplay/s_gameplay.yy",},"order":0,},
     {"id":{"name":"mask_s_p","path":"sprites/mask_s_p/mask_s_p.yy",},"order":30,},
     {"id":{"name":"s_en_00_death","path":"sprites/s_en_00_death/s_en_00_death.yy",},"order":0,},
     {"id":{"name":"s_p_atk_air_02","path":"sprites/s_p_atk_air_02/s_p_atk_air_02.yy",},"order":35,},

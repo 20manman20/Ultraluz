@@ -16,4 +16,5 @@ en_state	= en_st.idle
 
 hdir		= 1
 
+image_speed	= 1
 

@@ -84,14 +84,17 @@ function event_wall_hang() {
 	}
 }
 	
-function event_hinput(_flip = true, _keys = true, _hsp = true) {
+function event_hinput(_flip = true, _keys = true, _hsp = true, _acc = spd_acc[h], _fric = spd_acc[h]) {
 	var _hkey	= (key_right - key_left)
 	if hinput == 0 && _hkey != 0 {
 		alarm[(5-_hkey)/2]	= 10	
 	}
 	if	_keys	hinput		= (key_right - key_left)
 	if _flip && hinput != 0 && _flip hdir	= hinput
-	if _hsp	spd[h]	= approach(spd[h], hinput*spd_max[h], spd_acc[h])
+	if _hsp	{
+		if hinput != 0 spd[h]	= approach(spd[h], hinput*spd_max[h], _acc)
+		else spd[h]	= approach(spd[h], 0, _fric)
+	}
 }
 
 function event_animation(s_index = sprite_index, i_speed = image_speed, i_index = image_index) {
