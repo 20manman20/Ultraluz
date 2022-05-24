@@ -59,6 +59,7 @@
     {"id":{"name":"Space_Background","path":"sprites/Space_Background/Space_Background.yy",},"order":23,},
     {"id":{"name":"o_enemy_01","path":"objects/o_enemy_01/o_enemy_01.yy",},"order":10,},
     {"id":{"name":"s_en_00_atk","path":"sprites/s_en_00_atk/s_en_00_atk.yy",},"order":15,},
+    {"id":{"name":"o_enemy_02","path":"objects/o_enemy_02/o_enemy_02.yy",},"order":12,},
     {"id":{"name":"s_enemy","path":"sprites/s_enemy/s_enemy.yy",},"order":4,},
     {"id":{"name":"o_enemy_00","path":"objects/o_enemy_00/o_enemy_00.yy",},"order":5,},
     {"id":{"name":"lilspook63","path":"sprites/lilspook63/lilspook63.yy",},"order":20,},

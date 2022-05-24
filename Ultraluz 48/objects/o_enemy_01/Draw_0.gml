@@ -1,7 +1,7 @@
 //draw_text(x,y-64,(sign(o_player.x-x) != hdir) && alarm[2] == -1 )
 
 function interval_is_off(_value, _interval) {
-	return (_value % _interval) <= _interval/2;
+	return (_value % _interval) <= _interval/4;
 
 }
 

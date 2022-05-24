@@ -1,5 +1,6 @@
 #macro SHIELD_ABS_TIME	50
 #macro ATK_ABS_COOLDOWN	30
+#macro DMG_ABS_COOLDOWN	10
 
 //Velocidad en x y
 spd			= [0,0]

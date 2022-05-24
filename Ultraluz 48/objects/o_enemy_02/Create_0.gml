@@ -44,7 +44,6 @@ shield_time		= 0
 
 #region	Estados
 st_ev[en_st.idle]		= function() {
-	event_gravity()
 	event_animation(s_en_00_idle,1)
 	spd[h]	= approach(spd[h],0,spd_acc[h])
 	

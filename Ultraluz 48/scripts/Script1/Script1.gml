@@ -31,5 +31,16 @@ function timers_system() {
 	}
 }
 
+function event_damage() {
+	if bol_hit && timer[2]	== -1 {
+		damage_to_enemy(10,5,2*bol_hit.image_xscale,-2,DMG_ABS_COOLDOWN)
 
+		if en_health <= 0 {
+			state	= en_st.death
+			image_index		= 0
+			sprite_index	= s_en_00_death
+		}
+	}
+	return (bol_hit && timer[2]	== -1)
+}
 
