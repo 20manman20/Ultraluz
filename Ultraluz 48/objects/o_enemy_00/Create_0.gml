@@ -19,14 +19,14 @@ atk_dash		= 3
 //Dirección a la que va a apuntar
 //Direccion mientras volta
 //Dirección que dibuja
-hdir		= 1
+hdir		= image_xscale
 hdir_r		= hdir
 hdir_d		= hdir_r
 
 //Velocidad de imagen
 //Escalado de imagen
 im_speed	= 1
-i_scale		= [1,1]
+im_scale		= [1,1]
 
 //Recibe daño
 bol_hit		= false
@@ -61,6 +61,8 @@ st_ev[en_st.walk]		= function() {
 	event_gravity()
 	event_animation(s_en_00_walk,1)
 	spd[h]	= approach(spd[h],spd_max[h]*hdir_d,spd_acc[h])
+	
+	if !place_meeting(x+8*hdir_d,y+1,o_solid) event_insta_flip(hdir*(-1))
 	
 	if event_damage() {
 	} else if bol_player && timer[3] == -1 {

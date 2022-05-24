@@ -10,7 +10,7 @@ function interval_is_off(argument0, argument1) {
 }
 
 
-if interval_is_off(timer[2], 16) draw_sprite_ext(sprite_index,image_index,x,y,hdir_d*i_scale[h],i_scale[v],image_angle,image_blend,image_alpha)
+if interval_is_off(timer[2], 16) draw_sprite_ext(sprite_index,image_index,x,y,hdir_d*im_scale[h],im_scale[v],image_angle,image_blend,image_alpha)
 
 gpu_set_fog(false, c_white, 0, 1)
 

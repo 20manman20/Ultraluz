@@ -1,7 +1,7 @@
 function event_jump() {
 	if key_jump && bol_floor {
-		i_scale[h] = .7
-		i_scale[v] = 1.5
+		im_scale[h] = .7
+		im_scale[v] = 1.5
 		p_state	= p_st.jump
 		spd[v]	= -spd_max[v]/1.3
 	}
@@ -16,8 +16,8 @@ function event_jump() {
 			coyote--
 			if !jumped && key_jump {
 				spd[v]	= -spd_max[v]/1.3
-				i_scale[h] = .8
-				i_scale[v] = 1.4
+				im_scale[h] = .8
+				im_scale[v] = 1.4
 				p_state	= p_st.jump
 				jumped	= true
 			}
@@ -34,8 +34,8 @@ function event_jump() {
 		buffer--
 		if bol_floor {
 			spd[v]	= -spd_max[v]/1.3
-			i_scale[h] = .8
-			i_scale[v] = 1.4
+			im_scale[h] = .8
+			im_scale[v] = 1.4
 			p_state	= p_st.jump
 			buffer = 0
 			jumped	= true
@@ -79,8 +79,8 @@ function event_dash() {
 function event_wall_hang() {
 	if spd[v] > -2 && !bol_floor && !place_meeting(x+hdir*4,y-sprite_height-3,o_solid) && place_meeting(x+hdir*4,y-sprite_height+1,o_solid) {
 		p_state	= p_st.wall_hang
-		i_scale[h]	= 1.2
-		i_scale[v]	= .8
+		im_scale[h]	= 1.2
+		im_scale[v]	= .8
 	}
 }
 	

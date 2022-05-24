@@ -26,7 +26,7 @@ hdir_d		= hdir_r
 //Velocidad de imagen
 //Escalado de imagen
 im_speed	= 1
-i_scale		= [1,1]
+im_scale		= [1,1]
 
 //Recibe daño
 bol_hit		= false
@@ -44,124 +44,17 @@ shield_time		= 0
 
 #region	Estados
 st_ev[en_st.idle]		= function() {
-	event_animation(s_en_00_idle,1)
+	event_animation(s_en_02,1)
 	spd[h]	= approach(spd[h],0,spd_acc[h])
 	
-
-	if event_damage() {
-	} else if bol_player && timer[3] == -1 {
-		event_insta_flip(sign(o_player.x-x))
-		image_index	= 0
-		state	= en_st.preatk
-	}
 }
 
 st_ev[en_st.walk]		= function() {
-	event_gravity()
-	event_animation(s_en_00_walk,1)
+	event_animation(s_en_02,1)
 	spd[h]	= approach(spd[h],spd_max[h]*hdir_d,spd_acc[h])
-	
-	if event_damage() {
-	} else if bol_player && timer[3] == -1 {
-		event_insta_flip(sign(o_player.x-x))
-		image_index	= 0
-		state	= en_st.preatk
-	}
 }
 
 st_ev[en_st.preatk]		= function() {
-	event_gravity()
-	event_animation(s_en_00_atk,1)
-	spd[h]	= approach(spd[h],0,spd_acc[h])
-	hdir	= sign(o_player.x-x)
-	
-	if event_damage() {
-	} else if image_index >= image_number - 3 {
-		timer[3]			= ATK_ABS_COOLDOWN
-		var _atk			= instance_create_depth(x*hdir_d,y,depth,o_en_00_atk)
-		_atk.image_xscale	= hdir_d
-		_atk.en_id			= id
-		state	= en_st.atk
-	}
-}
-
-st_ev[en_st.atk]		= function() {
-	event_gravity()
-	event_animation(s_en_00_atk,1)
-	
-	if event_damage() {
-	} else if animation_end() {
-		if sign(o_player.x - x) == hdir {
-			state	= en_st.preatk_1
-			sprite_index	= s_en_00_atk_1
-			image_index	= 0
-		} else {
-			state	= en_st.idle
-			timer[3]	= ATK_ABS_COOLDOWN
-		}
-	}
-}
-
-st_ev[en_st.preatk_1]		= function() {
-	event_gravity()
-	event_animation(s_en_00_atk_1,1)
-	spd[h]	= approach(spd[h],0,spd_acc[h])
-	
-	if image_index >= 2 && sign(x-o_player.x) == hdir_d {
-		state	= en_st.idle
-		timer[3]	= ATK_ABS_COOLDOWN
-	}
-	
-	
-	if event_damage() {
-	} else if image_index >= image_number - 4 && sign(x-o_player.x) == -hdir_d {
-		var _dis			= max(0,abs(x-o_player.x)-48)
-		spd_push[0]			= hdir*(power(1+8*_dis,.5)-1)/2
-		if image_index >= image_number - 3 {
-			timer[3]			= ATK_ABS_COOLDOWN
-			var _atk			= instance_create_depth(x*hdir_d,y,depth,o_en_00_atk)
-			_atk.image_xscale	= hdir_d
-			_atk.en_id			= id
-			state	= en_st.atk_1
-		}
-	} 
-}
-
-st_ev[en_st.atk_1]		= function() {
-	event_gravity()
-	event_animation(s_en_00_atk_1,1)
-	event_damage()
-	if animation_end() {
-		state	= en_st.idle
-	}
-}
-
-st_ev[en_st.shield]		= function() {
-	event_animation(s_en_00_shield,1)
-	event_gravity()
-	spd[h]	= 0
-	
-	shield_time--
-		
-	if shield_time <= 0 {
-		shield_time	= 0
-		im_speed	= 1
-		state	= en_st.idle
-			
-	}
-		
-	if animation_end() im_speed	= 0
-	if !bol_player	{
-		state	= en_st.idle
-		timer[tm_change_idle_walk] = irandom_range(30,90)
-	} else hdir	= sign(bol_player.x-x)
-}
-
-st_ev[en_st.death]		= function() {
-	event_gravity()
-	event_animation(s_en_00_death,1)
-	spd[h]	= 0
-	if animation_end() instance_destroy()
 }
 
 //Variables de estados

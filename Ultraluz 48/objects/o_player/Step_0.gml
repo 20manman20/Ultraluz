@@ -363,8 +363,8 @@ switch (p_state) {
 		spd		= [rope[h]-x,rope[v]-y]
 		
 		if key_jump {
-			i_scale[h] = .7
-			i_scale[v] = 1.5
+			im_scale[h] = .7
+			im_scale[v] = 1.5
 			p_state	= p_st.jump 
 		}
 		
@@ -417,13 +417,13 @@ if buffer_atk > 0 {
 }
 
 if place_meeting(x, y+1, o_solid) && !place_meeting(x, yprevious+1, o_solid) {
-	i_scale[h] = 1.3
-	i_scale[v] = .7
+	im_scale[h] = 1.3
+	im_scale[v] = .7
 	
 }
 
-i_scale[h]	= lerp(i_scale[h],1,.2)
-i_scale[v]	= lerp(i_scale[v],1,.2)
+im_scale[h]	= lerp(im_scale[h],1,.2)
+im_scale[v]	= lerp(im_scale[v],1,.2)
 
 if p_health <= 10 {
 	instance_destroy()

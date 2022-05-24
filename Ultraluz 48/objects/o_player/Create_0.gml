@@ -102,7 +102,7 @@ hit_time		= 0
 
 dash_spd		= 7
 
-i_scale			= [1,1]
+im_scale			= [1,1]
 hdir			= 1
 
 depth	-= 2
