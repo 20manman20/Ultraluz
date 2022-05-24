@@ -23,11 +23,13 @@ enum en_st {
 	shield,
 	preatk,
 	atk,
+	preatk_1,
+	atk_1,
 	damage,
 	death
 }
 
-en_state	= en_st.idle
+state	= en_st.idle
 
 hdir		= 1
 

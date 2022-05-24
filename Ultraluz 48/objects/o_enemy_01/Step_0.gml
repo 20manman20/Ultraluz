@@ -29,14 +29,14 @@ image_xscale	= hdir
 
 
 
-switch (en_state) {
+switch (state) {
     case en_st.idle:
 		if _col_damage {
 			instance_destroy(_col_damage)
 			if sign(o_player.x-x) == hdir {
 				shield_time	= SHIELD_ABS_TIME + random_range(-2,10)
 				hdir		= sign(o_player.x-x)
-				en_state	= en_st.shield
+				state	= en_st.shield
 				image_index		= 0
 				sprite_index	= s_en_00_shield
 			} else if alarm[2]	== -1{
@@ -45,7 +45,7 @@ switch (en_state) {
 				en_health		-= 10
 					
 				if en_health <= 0 {
-					en_state	= en_st.death
+					state	= en_st.death
 					image_index		= 0
 					sprite_index	= s_en_00_death
 				}
@@ -53,7 +53,7 @@ switch (en_state) {
 		} else if distance_to_point(o_player.x,o_player.y) < 96 && alarm[0] == -1 {
 			hdir		= sign(o_player.x-x)
 			image_index	= 0
-			en_state	= en_st.preatk
+			state	= en_st.preatk
 		}
 		
 		sprite_index	= s_en_00_idle
@@ -74,21 +74,21 @@ switch (en_state) {
 				en_health		-= 10
 					
 				if en_health <= 0 {
-					en_state	= en_st.death
+					state	= en_st.death
 					image_index		= 0
 					sprite_index	= s_en_00_death
 				}
 			}
 		} 
 		
-		if animation_end() image_speed	= 0
+		if animation_end() im_speed	= 0
 		
 		shield_time--
 		
 		if shield_time <= 0 {
 			shield_time	= 0
-			image_speed	= 1
-			en_state	= en_st.idle
+			im_speed	= 1
+			state	= en_st.idle
 			
 		}
 		
@@ -100,7 +100,7 @@ switch (en_state) {
 			if sign(o_player.x-x) == hdir {
 				shield_time	= SHIELD_ABS_TIME + random_range(-2,10)
 				hdir		= sign(o_player.x-x)
-				en_state	= en_st.shield
+				state	= en_st.shield
 				image_index		= 0
 				sprite_index	= s_en_00_shield
 			} else if alarm[2]	== -1 {
@@ -109,7 +109,7 @@ switch (en_state) {
 				en_health		-= 10
 					
 				if en_health <= 0 {
-					en_state	= en_st.death
+					state	= en_st.death
 					image_index		= 0
 					sprite_index	= s_en_00_death
 				}
@@ -123,7 +123,7 @@ switch (en_state) {
 			_atk.image_xscale	= hdir
 			_atk.en_id			= id
 			//spd_push[h]	= atk_dash*hdir
-			en_state	= en_st.atk
+			state	= en_st.atk
 			alarm[0]	= ATK_ABS_COOLDOWN
 		}
 		break
@@ -136,7 +136,7 @@ switch (en_state) {
 				en_health		-= 10
 				
 				if en_health <= 0 {
-					en_state	= en_st.death
+					state	= en_st.death
 					image_index		= 0
 					sprite_index	= s_en_00_death
 				}
@@ -144,12 +144,12 @@ switch (en_state) {
 		} 
 	
 		if animation_end() {
-			en_state	= en_st.idle
+			state	= en_st.idle
 		}
 		break
 	case en_st.death:
 		sprite_index	= s_en_00_death
-		image_speed		= 1
+		im_speed		= 1
 		if animation_end() {
 			instance_destroy()
 		}

@@ -1,5 +1,7 @@
 with other {
 	if alarm[0]	== -1 {
+		game_spd		= 0
+		o_camera.alarm[1]	= 10
 		p_state			= p_st.hit
 		hit_time		= HIT_ABS_TIME
 		shake			= 5

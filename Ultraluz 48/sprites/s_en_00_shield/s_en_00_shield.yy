@@ -38,7 +38,7 @@
     "spriteId": {"name":"s_en_00_shield","path":"sprites/s_en_00_shield/s_en_00_shield.yy",},
     "timeUnits": 1,
     "playback": 1,
-    "playbackSpeed": 14.0,
+    "playbackSpeed": 20.0,
     "playbackSpeedType": 0,
     "autoRecord": true,
     "volume": 1.0,

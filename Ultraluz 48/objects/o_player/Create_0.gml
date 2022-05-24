@@ -105,6 +105,6 @@ dash_spd		= 7
 i_scale			= [1,1]
 hdir			= 1
 
+depth	-= 2
 
-
-image_speed	= 1
+im_speed	= 1

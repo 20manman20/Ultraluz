@@ -17,8 +17,10 @@ bol_floor	= place_meeting(x,y+1,o_solid)
 spd_final[h]	= spd[h] + spd_push[h]
 spd_final[v]	= spd[v] + spd_push[v]
 
-spd_push[h]	= approach(spd_push[h],0,.2)
-spd_push[v]	= approach(spd_push[v],0,.2)
+if game_spd {
+	spd_push[h]	= approach(spd_push[h],0,.2)
+	spd_push[v]	= approach(spd_push[v],0,.2)
+}
 
 repeat (abs(spd_final[h]*COL_TIME)*game_spd) {
 	if place_meeting(x+sign(spd_final[h]),y,o_solid) {
@@ -47,7 +49,7 @@ switch (p_state) {
 		event_jump()
 		event_wall_hang()
 		event_gravity(true)
-		event_hinput()
+		event_p_hinput()
 		
 		event_animation(s_p_idle,1)
 		
@@ -64,18 +66,18 @@ switch (p_state) {
 		event_jump()
 		event_wall_hang()
 		event_gravity(true)
-		event_hinput()
+		event_p_hinput()
 	 
 		event_animation(s_p_run)
 		
 		if hinput == 0 {
-			image_speed	= abs(spd[h])/spd_max[h]
+			im_speed	= abs(spd[h])/spd_max[h]
 			if spd[h] == 0	p_state		= p_st.idle
 		} else if hinput = -sign(spd[h]) {
 			p_state		= p_st.turn_around
 			image_index	= 0
 			sprite_index	= s_p_turn_around
-		} else image_speed		= 1
+		} else im_speed		= 1
 		
 		if event_dash() {}
 		else if event_attack() {}
@@ -85,7 +87,7 @@ switch (p_state) {
 		event_jump()
 		event_wall_hang()
 		event_gravity(true)
-		event_hinput()
+		event_p_hinput()
 		
 		event_animation(s_p_turn_around,1)
 		
@@ -103,7 +105,7 @@ switch (p_state) {
 		event_jump()
 		event_wall_hang()
 		event_gravity()
-		event_hinput()
+		event_p_hinput()
 		
 		event_animation(s_p_jump,1)
 		
@@ -113,7 +115,8 @@ switch (p_state) {
 			image_index	= 0
 			sprite_index	= s_p_roll_throw
 			spd[h]		= 0
-			spd[h]	= 6*hdir
+			spd[h]		= 6*hdir
+			spd[v]		= -2
 			
 		} else if spd[v] > -.3 {
 			p_state	= p_st.jump_fall
@@ -125,7 +128,7 @@ switch (p_state) {
 	case p_st.jump_fall:
 		event_wall_hang()
 		event_gravity()
-		event_hinput()
+		event_p_hinput()
 		
 		event_animation(s_p_jump_fall,1)
 		
@@ -135,7 +138,8 @@ switch (p_state) {
 			image_index	= 0
 			sprite_index	= s_p_roll_throw
 			spd[h]		= 0
-			spd[h]	= 6*hdir
+			spd[h]		= 6*hdir
+			spd[v]		= -2
 		} else if animation_end() {
 			p_state		= p_st.fall
 			image_index	= 0
@@ -145,7 +149,7 @@ switch (p_state) {
 	case p_st.fall:
 		event_wall_hang()
 		event_gravity()
-		event_hinput()
+		event_p_hinput()
 		
 		event_animation(s_p_fall,1)
 		
@@ -172,15 +176,18 @@ switch (p_state) {
 			coyote_atk_i	= 1
 			
 			if buffer_atk > 0 {
-				var _atk	= instance_create_depth(x+8,y,depth,o_bullet)
+				var _atk	= instance_create_depth(x,y,depth,o_bullet)
 				_atk.image_xscale	= hdir
 				p_state		= p_st.atk_00+buffer_atk_i
 				image_index	= 0
 				sprite_index	= s_p_atk_01
 			}
-		} else if key_atk && image_index > 2 {
-			buffer_atk		= buffer_atk_max
-			buffer_atk_i	= 1
+		} else if image_index > 2 {
+			if event_dash() {}
+			else if key_atk { 
+				buffer_atk		= buffer_atk_max
+				buffer_atk_i	= 1
+			}
 		}
 		break
 		
@@ -199,15 +206,18 @@ switch (p_state) {
 			coyote_atk_i	= 2
 			
 			if buffer_atk > 0 {
-				var _atk	= instance_create_depth(x+8,y,depth,o_bullet)
+				var _atk	= instance_create_depth(x,y,depth,o_bullet)
 				_atk.image_xscale	= hdir
 				p_state		= p_st.atk_00+buffer_atk_i
 				image_index	= 0
 				sprite_index	= s_p_atk_02
 			}
-		} else if key_atk && image_index > 2 {
-			buffer_atk		= buffer_atk_max
-			buffer_atk_i	= 2
+		} else if image_index > 2 {
+			if event_dash() {}
+			else if key_atk { 
+				buffer_atk		= buffer_atk_max
+				buffer_atk_i	= 2
+			}
 		}
 		
 		break
@@ -218,6 +228,9 @@ switch (p_state) {
 		if image_index > 2 event_jump()
 		spd[h]			= lerp(spd[h],0,.2)
 		
+		if image_index > 2 {
+			event_dash()
+		}
 		if animation_end() {
 			if hinput != 0 p_state	= p_st.run
 			else p_state	= p_st.idle
@@ -228,9 +241,16 @@ switch (p_state) {
 	case p_st.dash:
 		event_gravity(true)
 		event_animation(s_p_roll_land,1)
+		var _key_i	= key_right - key_left
+		
+		if image_index < 1 && _key_i == -hdir {
+			spd_push[h]	= dash_spd*_key_i
+			hdir		= _key_i
+			p_state		= p_st.dash_back
+		}
 		
 		if key_dash_r spd_push[h]*=.3
-		image_speed	= 1
+		im_speed	= 1
 		if animation_end() {
 			if hinput != 0 p_state	= p_st.run
 			else p_state	= p_st.idle
@@ -252,23 +272,23 @@ switch (p_state) {
 	case p_st.roll_throw:
 		event_gravity()
 		event_wall_hang()
-		event_hinput(false,true,true,.15, .1)
+		event_p_hinput(false,true,true,.15, .1)
 	
 		
 		if animation_end() {
-			image_speed	= 0
+			im_speed	= 0
 		}
 		
 		if bol_floor {
 			p_state		= p_st.roll
 			image_index		= 0
-			image_speed		= 1
+			im_speed		= 1
 			sprite_index	= s_p_roll_land
 		}
 		break
 	case p_st.roll:
 		event_gravity()
-		event_hinput(true,true,true,.2,.1)
+		event_p_hinput(true,true,true,.2,.1)
 		event_wall_hang()
 		
 		sprite_index	= s_p_roll_land
@@ -324,7 +344,7 @@ switch (p_state) {
 		break
 	case p_st.wall_climb:
 		if animation_end() {
-			image_speed	= 0
+			im_speed	= 0
 			x	+= 15
 			y	-= 28
 			sprite_index	= s_p_idle
@@ -372,7 +392,7 @@ switch (p_state) {
 			else p_state	= p_st.idle
 			//alarm[1]		= 10
 			if buffer_atk > 0 {
-				var _atk	= instance_create_depth(x+8,y,depth,o_bullet)
+				var _atk	= instance_create_depth(x,y,depth,o_bullet)
 				_atk.image_xscale	= hdir
 				p_state		= p_st.atk_01
 				image_index	= 0
@@ -413,3 +433,4 @@ if coyote_atk > 0 {
 	coyote_atk--
 }
 
+image_speed	= im_speed*game_spd

@@ -57,8 +57,8 @@ function event_gravity(_fall_st = false) {
 	
 function event_dash() {
 	if key_dash {
+		image_index	= 0
 		if (hinput_prev == -hdir) || p_state = p_st.turn_around {
-			image_index	= 0
 			spd[h]		= 0
 			hdir		*= -1
 			hinput_prev *= -1
@@ -84,7 +84,7 @@ function event_wall_hang() {
 	}
 }
 	
-function event_hinput(_flip = true, _keys = true, _hsp = true, _acc = spd_acc[h], _fric = spd_acc[h]) {
+function event_p_hinput(_flip = true, _keys = true, _hsp = true, _acc = spd_acc[h], _fric = spd_acc[h]) {
 	var _hkey	= (key_right - key_left)
 	if hinput == 0 && _hkey != 0 {
 		alarm[(5-_hkey)/2]	= 10	
@@ -97,20 +97,20 @@ function event_hinput(_flip = true, _keys = true, _hsp = true, _acc = spd_acc[h]
 	}
 }
 
-function event_animation(s_index = sprite_index, i_speed = image_speed, i_index = image_index) {
+function event_animation(s_index = sprite_index, i_speed = im_speed, i_index = image_index) {
 	sprite_index	= s_index
-	image_speed		= i_speed
+	im_speed		= i_speed
 	image_index		= i_index
 }
 
 function event_attack() {
 	if key_atk {
 		if coyote_atk > 0 {
-			var _atk	= instance_create_depth(x+8,y,depth,o_bullet)
+			var _atk	= instance_create_depth(x,y,depth,o_bullet)
 			_atk.image_xscale	= hdir
 			p_state		= p_st.atk_00 + coyote_atk_i
 		} else {
-			var _atk	= instance_create_depth(x+8,y,depth,o_bullet)
+			var _atk	= instance_create_depth(x,y,depth,o_bullet)
 			_atk.image_xscale	= hdir
 			p_state		= p_st.atk_00
 			sprite_index	= s_p_atk_00
@@ -121,11 +121,17 @@ function event_attack() {
 
 function event_attack_air() {
 	if key_atk {
-		var _atk	= instance_create_depth(x+8,y,depth,o_bullet)
+		var _atk	= instance_create_depth(x,y,depth,o_bullet)
 		_atk.image_xscale	= hdir
 		sprite_index	= s_p_atk_air_02
 		p_state		= p_st.atk_air_02
 		image_index	= 0
 	} return key_atk
 
+}
+
+function event_insta_flip(_dir) {
+	hdir	= _dir
+	hdir_r	= _dir
+	hdir_d	= _dir
 }

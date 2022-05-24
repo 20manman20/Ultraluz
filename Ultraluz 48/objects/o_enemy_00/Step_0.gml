@@ -1,11 +1,12 @@
-
-
 bol_floor	= place_meeting(x,y+1,o_solid)
-if !bol_floor {
-	spd[v]	= approach(spd[v],spd_max[v],spd_acc[v])
-}
+bol_hit		= instance_place(x,y,o_p_damage)
 
-var _col_damage	= instance_place(x,y,o_p_damage)
+var _front	= det_front + 16*(state == en_st.shield)
+var _mid	= (det_behind+_front)/2
+var _x		= _front-_mid
+
+bol_player	= collision_rectangle(x+_x*hdir_d-_mid,y-64,x+_x*hdir_d+_mid,y+8,o_player,false,true)
+
 
 spd_final[h]	= spd[h] + spd_push[h]
 spd_final[v]	= spd[v] + spd_push[v]
@@ -27,116 +28,14 @@ repeat (abs(spd_final[v]*COL_TIME)*game_spd) {
 	}  else y += sign(spd_final[v])/COL_TIME
 }
 
-image_xscale	= hdir
 
-switch (en_state) {
-    case en_st.idle:
-		if _col_damage && alarm[2]	== -1{
-			damage_to_enemy(10,5,2*_col_damage.image_xscale,0,15)
-			if en_health <= 0 {
-				en_state	= en_st.death
-				image_index		= 0
-				sprite_index	= s_en_00_death
-			}
-		} else if instance_exists(o_player) && distance_to_point(o_player.x,o_player.y) < 96 && alarm[0] == -1 {
-			hdir		= sign(o_player.x-x)
-			image_index	= 0
-			en_state	= en_st.preatk
-			spd[0]		= 0
-		} else {
-			var _random	= irandom_range(0,60)
-			if _random = 60 {
-				var _ran_flip	= irandom_range(0,2)
-				if _ran_flip == 0 hdir*=-1
-				else {
-					en_state	= en_st.walk
-					image_index		= 0
-					sprite_index	= s_en_00_walk
-				}
-			}
-		}
-		
-		sprite_index	= s_en_00_idle
-		
-        break
-    case en_st.walk:
-		if _col_damage && alarm[2]	== -1{
-			damage_to_enemy(10,5,2*_col_damage.image_xscale,0,15)
-			if en_health <= 0 {
-				en_state	= en_st.death
-				image_index		= 0
-				sprite_index	= s_en_00_death
-			}
-		} else if instance_exists(o_player) && distance_to_point(o_player.x,o_player.y) < 96 && alarm[0] == -1 {
-			hdir		= sign(o_player.x-x)
-			image_index	= 0
-			en_state	= en_st.preatk
-		} else {
-			var _fall	= !place_meeting(x+18*hdir,y+1,o_solid)
-			if _fall hdir	*= -1
-			
-			spd[h]			= hdir*spd_max[h]
-			
-			var _random	= irandom_range(0,60)
-			if _random = 60 {
-				var _ran_flip	= irandom_range(0,2)
-				if _ran_flip == 0 hdir*=-1
-				else {
-					spd[h]			= 0
-					en_state		= en_st.idle
-					image_index		= 0
-					sprite_index	= s_en_00_idle
-				}
-			}
-		}
+st_ev[state]()
 
-		sprite_index	= s_en_00_walk
-		
-        break
-	case en_st.preatk:
-		if _col_damage && alarm[2]	== -1 {
-			damage_to_enemy(10,5,2*_col_damage.image_xscale,0,15)
-			if en_health <= 0 {
-				en_state	= en_st.death
-				image_index		= 0
-				sprite_index	= s_en_00_death
-			}
-		}		
-		sprite_index	= s_en_00_atk
-		if image_index >= 7 && instance_exists(o_player) {
-			atk_dash		= 2//clamp(linear_int(128,7,16,1,distance_to_object(o_player)),0,7)
-			var _atk			= instance_create_depth(x*hdir,y,depth,o_en_00_atk)
-			_atk.image_xscale	= hdir
-			_atk.en_id			= id
-			spd_push[h]	= atk_dash*hdir
-			en_state	= en_st.atk
-			alarm[0]	= ATK_ABS_COOLDOWN
-		}
-		break
-	case en_st.atk:
-		if _col_damage {
-			instance_destroy(_col_damage)
-			if instance_exists(o_player) && sign(o_player.x-x) != hdir && alarm[2]	== -1 {
-				damage_to_enemy(10,5,2*_col_damage.image_xscale,0,15)
-				
-				if en_health <= 0 {
-					en_state	= en_st.death
-					image_index		= 0
-					sprite_index	= s_en_00_death
-				}
-			}
-		} 
-	
-		if animation_end() {
-			en_state	= en_st.idle
-		}
-		break
-	case en_st.death:
-		sprite_index	= s_en_00_death
-		image_speed		= 1
-		if animation_end() {
-			instance_destroy()
-		}
-		break
-}
+timers_system()
+
+image_speed	= im_speed*game_spd
+
+hdir_r	= approach(hdir_r,hdir,reaction_time*2)
+
+if abs(hdir_r) == 1 hdir_d = hdir_r
 
