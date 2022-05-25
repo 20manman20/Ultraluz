@@ -57,6 +57,12 @@ im_speed		= 1
 im_angle		= 0
 hdir			= 1
 
+coyote			= 0
+coyote_max		= 30
+
+jumped			= false
+
+
 depth	-= 2
 
 #endregion
@@ -239,6 +245,7 @@ st_ev[p_st.jump]	= function() {
 
 st_ev[p_st.fall]	= function() {
 	event_p_collision()
+	event_p_jump()
 	event_p_wall_hang()
 	event_gravity()
 	event_p_hinput()
@@ -254,6 +261,7 @@ st_ev[p_st.fall]	= function() {
 
 st_ev[p_st.jump_fall]	= function() {
 	event_p_collision()
+	event_p_jump()
 	event_p_wall_hang()
 	event_gravity()
 	event_p_hinput()

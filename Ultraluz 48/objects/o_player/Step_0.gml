@@ -16,7 +16,7 @@ key_jump_r	= keyboard_check_released(ord("X"))
 key_dash	= keyboard_check_pressed(ord("C"))
 key_dash_r	= keyboard_check_released(ord("C"))
 
-
+bol_roof	= place_meeting(x,y-2,o_solid)
 bol_floor	= place_meeting(x,y+1,o_solid)
 
 spd_final[h]	= spd[h] + spd_push[h]
@@ -31,6 +31,36 @@ if buffer_atk > 0 {
 	buffer_atk--
 }
 
+if !bol_floor {
+	if coyote > 0 {
+		coyote--
+		if !jumped && key_jump && !bol_roof {
+			im_scale[h] = .7
+			im_scale[v] = 1.5
+			state	= p_st.jump
+			spd[v]	= -spd_max[v]/1.3
+			jumped	= true
+		}
+	}
+} else {
+	jumped	= false
+	coyote	= coyote_max
+} 
+	
+if key_jump && bol_floor && !bol_roof {
+	im_scale[h] = .7
+	im_scale[v] = 1.5
+	state	= p_st.jump
+	spd[v]	= -spd_max[v]/1.3
+	y--
+	jumped	= true
+	
+}
+
+
+if key_jump_r && spd[v] < 0 {
+	spd[v]	*= .5
+}
 st_ev[state]()
 
 if place_meeting(x, y+1, o_solid) && !place_meeting(x, yprevious+1, o_solid) {

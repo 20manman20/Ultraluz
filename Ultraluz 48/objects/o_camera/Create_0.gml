@@ -4,7 +4,7 @@ globalvar cam,shake;
 cam	= view_camera[0]
 shake	= 0
 
-o_target	= o_en15
+o_target	= o_player
 
 
 //window_set_fullscreen(true)

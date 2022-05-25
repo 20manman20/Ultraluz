@@ -4,7 +4,7 @@
     "path": "sprites/mask_s_p/mask_s_p.yy",
   },
   "solid": false,
-  "visible": true,
+  "visible": false,
   "spriteMaskId": null,
   "persistent": false,
   "parentObjectId": {

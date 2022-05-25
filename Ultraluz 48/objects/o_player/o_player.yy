@@ -1,7 +1,7 @@
 {
   "spriteId": {
-    "name": "s_p_idle",
-    "path": "sprites/s_p_idle/s_p_idle.yy",
+    "name": "s_p_idle44",
+    "path": "sprites/s_p_idle44/s_p_idle44.yy",
   },
   "solid": false,
   "visible": true,

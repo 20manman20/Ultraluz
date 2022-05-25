@@ -1,5 +1,6 @@
 #region Eventos solo para el jugador
 function event_p_jump() {
+	/*
 	if key_jump && bol_floor {
 		im_scale[h] = .7
 		im_scale[v] = 1.5
@@ -10,6 +11,9 @@ function event_p_jump() {
 	if key_jump_r && spd[v] < 0 {
 		spd[v]	*= .5
 	}
+	*/
+	
+	
 	
 	/*
 	if !bol_floor {
