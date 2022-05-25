@@ -1,25 +1,25 @@
 if alarm[1] > -1 {
-	var _atk	= instance_create_depth(x+8,y,depth,o_bullet)
+	var _atk	= instance_create_depth(x+8,y,depth,o_p_atk)
 	_atk.image_xscale	= hdir
 	sprite_index	= s_p_atk_01
-	p_state		= p_st.atk_01
+	state		= p_st.atk_01
 } else {
-	var _atk	= instance_create_depth(x+8,y,depth,o_bullet)
+	var _atk	= instance_create_depth(x+8,y,depth,o_p_atk)
 	_atk.image_xscale	= hdir
-	p_state		= p_st.atk_00
+	state		= p_st.atk_00
 	sprite_index	= s_p_atk_00
 }
 image_index	= 0
 
 if alarm[1] > -1 {
-	var _atk	= instance_create_depth(x+8,y,depth,o_bullet)
+	var _atk	= instance_create_depth(x+8,y,depth,o_p_atk)
 	_atk.image_xscale	= hdir
 	sprite_index	= s_p_atk_01
-	p_state		= p_st.atk_01
+	state		= p_st.atk_01
 } else {
-	var _atk	= instance_create_depth(x+8,y,depth,o_bullet)
+	var _atk	= instance_create_depth(x+8,y,depth,o_p_atk)
 	_atk.image_xscale	= hdir
-	p_state		= p_st.atk_00
+	state		= p_st.atk_00
 	sprite_index	= s_p_atk_00
 }
 image_index	= 0
@@ -27,14 +27,14 @@ image_index	= 0
 
 
 if alarm[1] > -1 {
-	var _atk	= instance_create_depth(x+8,y,depth,o_bullet)
+	var _atk	= instance_create_depth(x+8,y,depth,o_p_atk)
 	_atk.image_xscale	= hdir
 	sprite_index	= s_p_atk_01
-	p_state		= p_st.atk_01
+	state		= p_st.atk_01
 } else {
-	var _atk	= instance_create_depth(x+8,y,depth,o_bullet)
+	var _atk	= instance_create_depth(x+8,y,depth,o_p_atk)
 	_atk.image_xscale	= hdir
-	p_state		= p_st.atk_00
+	state		= p_st.atk_00
 	sprite_index	= s_p_atk_00
 }
 image_index	= 0
@@ -160,3 +160,29 @@ switch (state) {
 		state	= en_st.idle
 		break
 }
+
+arr_p_st		= [	"idle",
+					"run",
+					"turn_around",
+					"dash",
+					"dash_back",
+					"jump",
+					"fall",
+					"jump_fall",
+					"roll_throw",
+					"roll",
+					"roll_throw_back",
+					"roll_back",
+					"wall_hang",
+					"wall_climb",
+					"atk_00",
+					"atk_01",
+					"atk_02",
+					"atk_air_00",
+					"atk_air_01",
+					"atk_air_02",
+					"atk_air_02_fall",
+					"atk_air_02_land",
+					"hit",
+					"death",
+					"swing"]

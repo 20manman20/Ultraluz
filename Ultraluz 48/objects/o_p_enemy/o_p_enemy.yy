@@ -17,7 +17,9 @@
   "physicsStartAwake": true,
   "physicsKinematic": false,
   "physicsShapePoints": [],
-  "eventList": [],
+  "eventList": [
+    {"isDnD":false,"eventNum":0,"eventType":0,"collisionObjectId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMEvent",},
+  ],
   "properties": [
     {"varType":1,"value":"100","rangeEnabled":true,"rangeMin":10.0,"rangeMax":1000.0,"listItems":[],"multiselect":false,"filters":[],"resourceVersion":"1.0","name":"en_health","tags":[],"resourceType":"GMObjectProperty",},
   ],

@@ -14,14 +14,14 @@ function linear_int(x0,y0,x1,y1,value) {
 	return y0 + (value-x0)*(y1-y0)/(x1-x0)
 }
 
-function damage_to_enemy(_dmg, _shake, hpush, vpush, _atk_cooldown) {
+function damage_to_enemy(_dmg, _shake, hpush, vpush, _dmg_cooldown) {
 	en_health		-= _dmg
 	hdir			= sign(bol_hit.x-x)
 	shake			= _shake
 	game_spd		= 0
 	o_camera.alarm[1]	= 2
 	spd_push		= [hpush,vpush]
-	timer[2]		= _atk_cooldown
+	timer[TIMER_DMG]		= _dmg_cooldown
 }
 
 function timers_system() {
@@ -31,16 +31,4 @@ function timers_system() {
 	}
 }
 
-function event_damage() {
-	if bol_hit && timer[2]	== -1 {
-		damage_to_enemy(10,5,5*bol_hit.image_xscale,-2,-1)
-
-		if en_health <= 0 {
-			state	= en_st.death
-			image_index		= 0
-			sprite_index	= s_en_00_death
-		}
-	}
-	return (bol_hit && timer[2]	== -1)
-}
 

@@ -76,6 +76,7 @@ st_ev[bat_st.fly] = function() {
 
 //Variables de estados
 state	= bat_st.fly
+
 #endregion
 
 timer_amount = 3
@@ -84,3 +85,5 @@ for (var i = 0; i < timer_amount; ++i) {
 	timer[i]		= -1
 	timer_ev		= function() {}
 }
+
+

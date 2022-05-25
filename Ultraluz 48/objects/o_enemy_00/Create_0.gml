@@ -50,7 +50,7 @@ st_ev[en_st.idle]		= function() {
 	
 
 	if event_damage() {
-	} else if bol_player && timer[3] == -1 {
+	} else if bol_player && timer[TIMER_ATK] == -1 {
 		event_insta_flip(sign(o_player.x-x))
 		image_index	= 0
 		state	= en_st.preatk
@@ -65,7 +65,7 @@ st_ev[en_st.walk]		= function() {
 	if !place_meeting(x+8*hdir_d,y+1,o_solid) event_insta_flip(hdir*(-1))
 	
 	if event_damage() {
-	} else if bol_player && timer[3] == -1 {
+	} else if bol_player && timer[TIMER_ATK] == -1 {
 		event_insta_flip(sign(o_player.x-x))
 		image_index	= 0
 		state	= en_st.preatk
@@ -80,7 +80,7 @@ st_ev[en_st.preatk]		= function() {
 	
 	if event_damage() {
 	} else if image_index >= image_number - 3 {
-		timer[3]			= ATK_ABS_COOLDOWN
+		timer[TIMER_ATK]			= ATK_ABS_COOLDOWN
 		var _atk			= instance_create_depth(x*hdir_d,y,depth,o_en_00_atk)
 		_atk.image_xscale	= hdir_d
 		_atk.en_id			= id
@@ -100,7 +100,7 @@ st_ev[en_st.atk]		= function() {
 			image_index	= 0
 		} else {
 			state	= en_st.idle
-			timer[3]	= ATK_ABS_COOLDOWN
+			timer[TIMER_ATK]	= ATK_ABS_COOLDOWN
 		}
 	}
 }
@@ -112,7 +112,7 @@ st_ev[en_st.preatk_1]		= function() {
 	
 	if image_index >= 2 && sign(x-o_player.x) == hdir_d {
 		state	= en_st.idle
-		timer[3]	= ATK_ABS_COOLDOWN
+		timer[TIMER_ATK]	= ATK_ABS_COOLDOWN
 	}
 	
 	
@@ -121,7 +121,7 @@ st_ev[en_st.preatk_1]		= function() {
 		var _dis			= max(0,abs(x-o_player.x)-48)
 		spd_push[0]			= hdir*(power(1+8*_dis,.5)-1)/2
 		if image_index >= image_number - 3 {
-			timer[3]			= ATK_ABS_COOLDOWN
+			timer[TIMER_ATK]			= ATK_ABS_COOLDOWN
 			var _atk			= instance_create_depth(x*hdir_d,y,depth,o_en_00_atk)
 			_atk.image_xscale	= hdir_d
 			_atk.en_id			= id
@@ -156,7 +156,7 @@ st_ev[en_st.shield]		= function() {
 	if animation_end() im_speed	= 0
 	if !bol_player	{
 		state	= en_st.idle
-		timer[tm_change_idle_walk] = irandom_range(30,90)
+		timer[tm_change_idle_walk] = irandom_range(60,90)
 	} else hdir	= sign(bol_player.x-x)
 }
 
@@ -173,8 +173,8 @@ state	= en_st.idle
 #endregion
 
 #region Timers
-tm_change_dir		= 0
-tm_change_idle_walk	= 1
+tm_change_dir		= 2
+tm_change_idle_walk	= 3
 
 timer_ev[tm_change_dir] = function() {
 	switch (state) {
@@ -194,7 +194,7 @@ timer_ev[tm_change_idle_walk] = function() {
 			//Cuánto quieres que dure caminando
 			state	= en_st.walk
 			timer[tm_change_idle_walk] = irandom_range(180,240)
-			timer[tm_change_idle_walk] += timer[tm_change_idle_walk]
+			timer[tm_change_dir] += timer[tm_change_idle_walk]
 			break;
 	    case en_st.walk:
 			//Cambia a quieto
@@ -205,8 +205,8 @@ timer_ev[tm_change_idle_walk] = function() {
 	}
 }
 
-timer_ev[2]	= function() {}
-timer_ev[3]	= function() {}
+timer_ev[TIMER_DMG]	= function() {}
+timer_ev[TIMER_ATK]	= function() {}
 
 //Variables y funcionamiento de timers
 timer_amount	= 4
@@ -218,8 +218,8 @@ for (var i = 0; i < timer_amount; ++i) {
 #endregion
 
 //Iniciar timers aparte
-timer[0]	= irandom_range(30,60)
-timer[1]	= irandom_range(60,90)
+timer[tm_change_dir]	= irandom_range(30,60)
+timer[tm_change_idle_walk]	= irandom_range(60,90)
 
 det_front	= 120
 det_behind	= 50 
