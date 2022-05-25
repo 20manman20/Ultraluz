@@ -52,8 +52,9 @@ dash_spd		= 7
 //Escalado de imagen
 //Velocidad de imagen
 //Orientación Horizontal de imagen
-im_scale			= [1,1]
-im_speed	= 1
+im_scale		= [1,1]
+im_speed		= 1
+im_angle		= 0
 hdir			= 1
 
 depth	-= 2
@@ -524,11 +525,10 @@ st_ev[p_st.hit]	= function() {
 
 st_ev[p_st.swing]	= function() {
 	event_p_collision()
-	event_animation(s_p_swing,1)
-	image_angle	= point_direction(x,y,grapple[h],grapple[v])-90
+	event_animation(s_p_swing,1, image_index, point_direction(x,y,grapple[h],grapple[v])-90)
 	var _rope_angle_acc	= -rope_acc * dcos(rope_angle)
 	_rope_angle_acc += (key_right-key_left)*0.03
-	rope_length	+= (key_down-key_up)*0.5
+	rope_length	+= (key_down-key_up)*2
 	rope_angle_spd += _rope_angle_acc
 	rope_angle += rope_angle_spd
 	rope_angle_spd *= 0.97

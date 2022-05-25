@@ -151,10 +151,11 @@ function event_gravity(_fall_st = false) {
 	}
 }
 
-function event_animation(s_index = sprite_index, i_speed = im_speed, i_index = image_index) {
+function event_animation(s_index = sprite_index, i_speed = im_speed, i_index = image_index, i_angle = 0) {
 	sprite_index	= s_index
 	im_speed		= i_speed
 	image_index		= i_index
+	im_angle		= i_angle
 }
 
 function event_insta_flip(_dir) {

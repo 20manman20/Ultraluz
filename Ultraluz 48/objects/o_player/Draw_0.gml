@@ -16,7 +16,7 @@ if interval_is_off(alarm[0], 16)  {
 	gpu_set_fog(true, c_white, 0, 1)
 }
 
-draw_sprite_ext(sprite_index,image_index,x,y,hdir*im_scale[h],im_scale[v],image_angle,image_blend,image_alpha)
+draw_sprite_ext(sprite_index,image_index,x,y,hdir*im_scale[h],im_scale[v],im_angle,image_blend,image_alpha)
 
 draw_sprite_ext(mask_p,0,x,y,1,1,0,c_white,.3)
 

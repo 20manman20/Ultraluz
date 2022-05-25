@@ -119,7 +119,7 @@ st_ev[en_st.preatk_1]		= function() {
 	if event_damage() {
 	} else if image_index >= image_number - 4 && sign(x-o_player.x) == -hdir_d {
 		var _dis			= max(0,abs(x-o_player.x)-48)
-		spd_push[0]			= hdir*(power(1+8*_dis,.5)-1)/2
+		spd_push[0]			= clamp(hdir*(power(1+8*_dis,.5)-1)/2,-12,12)
 		if image_index >= image_number - 3 {
 			timer[TIMER_ATK]			= ATK_ABS_COOLDOWN
 			var _atk			= instance_create_depth(x*hdir_d,y,depth,o_en_00_atk)
