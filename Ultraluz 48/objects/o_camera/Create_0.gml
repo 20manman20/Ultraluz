@@ -17,3 +17,5 @@ y_to	= 180+32
 globalvar game_spd;
 game_spd	= 1
 
+
+alarm[2]	= 2400

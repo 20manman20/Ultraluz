@@ -227,7 +227,9 @@ st_ev[p_st.jump]	= function() {
 		
 	event_animation(s_p_jump,1)
 		
-	if event_p_attack_air() {}
+	if event_p_attack() {
+		spd[v] = 0
+	}
 	else if key_dash {
 		state		= p_st.roll_throw
 		image_index	= 0
@@ -268,7 +270,9 @@ st_ev[p_st.jump_fall]	= function() {
 		
 	event_animation(s_p_jump_fall,1)
 		
-	if event_p_attack_air() {}
+	if event_p_attack() {
+		spd[v] = 0
+	}
 	else if key_dash {
 		state		= p_st.roll_throw
 		image_index	= 0
@@ -387,7 +391,7 @@ st_ev[p_st.wall_climb]	= function() {
 
 st_ev[p_st.atk_00]	= function() {
 	event_p_collision()
-	event_gravity()
+	//event_gravity()
 	event_animation(s_p_atk_00,1)
 		
 	if image_index > 2 event_p_jump()
@@ -418,7 +422,7 @@ st_ev[p_st.atk_00]	= function() {
 
 st_ev[p_st.atk_01]	= function() {
 	event_p_collision()
-	event_gravity()
+	//event_gravity()
 	event_animation(s_p_atk_01,1)
 		
 	if image_index > 2 event_p_jump()
@@ -449,7 +453,7 @@ st_ev[p_st.atk_01]	= function() {
 
 st_ev[p_st.atk_02]	= function() {
 	event_p_collision()
-	event_gravity()
+	//event_gravity()
 	event_animation(s_p_atk_02,1)
 		
 	if image_index > 2 event_p_jump()
