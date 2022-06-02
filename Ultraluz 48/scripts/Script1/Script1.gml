@@ -22,6 +22,7 @@ function damage_to_enemy(_dmg, _shake, hpush, vpush, _dmg_cooldown) {
 	o_camera.alarm[1]	= 2
 	spd_push		= [hpush,vpush]
 	timer[TIMER_DMG]		= _dmg_cooldown
+	instance_create_depth(x,y,depth,o_atk)
 }
 
 function timers_system() {

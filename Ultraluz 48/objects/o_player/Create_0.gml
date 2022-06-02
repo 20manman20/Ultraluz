@@ -4,6 +4,7 @@
 #macro	v				1
 #macro	COL_TIME		10
 #macro	HIT_ABS_TIME	30
+#macro	HITBOX_TIMER	5
 
 //Input de velocidad horizontal
 hinput			= 1
@@ -15,7 +16,7 @@ spd_push	= [0,0]
 
 //Velocidad máxima al correr
 //Velocidad máxima al caer
-spd_max		= [2.5,7.5]
+spd_max		= [2.5,8]
 
 //Aceleración
 //Gravedad
@@ -35,11 +36,11 @@ rope_angle_spd	= 0
 rope_acc		= 0.2
 
 //Ataques
-coyote_atk_max	= 20
+coyote_atk_max	= 1
 coyote_atk		= 0
 coyote_atk_i	= 1
 
-buffer_atk_max	= 20
+buffer_atk_max	= 10
 buffer_atk		= 0
 buffer_atk_i	= 1
 
@@ -59,6 +60,9 @@ hdir			= 1
 
 coyote			= 0
 coyote_max		= 30
+
+buffer			= 0
+buffer_max		= 5
 
 jumped			= false
 
@@ -131,8 +135,8 @@ st_ev[p_st.idle]	= function() {
 	event_p_wall_hang()
 	event_gravity(true)
 	event_p_hinput()
-		
-	event_animation(s_p_idle,1)
+	mask_index	= mask_p
+	event_animation(s_p_idle44,1)
 		
 	if abs(spd[h]) > 0 {
 		state	= p_st.run
@@ -149,9 +153,22 @@ st_ev[p_st.run]	= function() {
 	event_p_wall_hang()
 	event_gravity(true)
 	event_p_hinput()
-	 
+	mask_index	= mask_p
 	event_animation(s_p_run)
 		
+	var _ram	= irandom_range(0,3)
+	
+	if _ram == 0 {
+		
+		for (var i = 0; i < irandom_range(1,2); ++i) {
+			var _dir	= random_range(darctan2(0,hdir)+180-20*hdir,darctan2(0,hdir)+180-60*hdir)
+			var _dis	= random_range(4,8)
+			var _dust	= instance_create_depth(x+hdir*4+lengthdir_x(_dis*1.2,_dir),y+lengthdir_y(_dis,_dir)+3,depth-2,o_dust)
+			_dust.direction	= _dir
+		}
+		
+	}
+
 	if hinput == 0 {
 		im_speed	= abs(spd[h])/spd_max[h]
 		if spd[h] == 0	state		= p_st.idle
@@ -171,7 +188,7 @@ st_ev[p_st.turn_around]	= function() {
 	event_p_wall_hang()
 	event_gravity(true)
 	event_p_hinput()
-		
+	mask_index	= mask_p
 	event_animation(s_p_turn_around,1)
 		
 	if event_p_dash() {}
@@ -188,9 +205,11 @@ st_ev[p_st.turn_around]	= function() {
 st_ev[p_st.dash]	= function() {
 	event_p_collision()
 	event_gravity(true)
-	event_animation(s_p_roll_land,1)
+	mask_index	= mask_p_land
+	trail_alpha	= 1
+	event_animation(s_p_slide,1)
 	var _key_i	= key_right - key_left
-		
+
 	if image_index < 1 && _key_i == -hdir {
 		spd_push[h]	= dash_spd*_key_i
 		hdir		= _key_i
@@ -208,7 +227,9 @@ st_ev[p_st.dash]	= function() {
 st_ev[p_st.dash_back]	= function() {
 	event_p_collision()
 	event_gravity(true)
-	event_animation(s_p_roll_land64,1)
+	mask_index	= mask_p_land
+	trail_alpha	= 1
+	event_animation(s_p_slide,1)
 		
 	if key_dash_r spd_push[h]*=.3
 		
@@ -224,20 +245,21 @@ st_ev[p_st.jump]	= function() {
 	event_p_wall_hang()
 	event_gravity()
 	event_p_hinput()
-		
+	mask_index	= mask_p
 	event_animation(s_p_jump,1)
 		
-	if event_p_attack() {
+	if event_p_attack_air() {
 		spd[v] = 0
 	}
 	else if key_dash {
+		trail_alpha	= 1
+		var fx	= instance_create_depth(x-hdir*16,y-16,depth,o_fx)
+		fx.image_xscale	= hdir
 		state		= p_st.roll_throw
 		image_index	= 0
 		sprite_index	= s_p_roll_throw
-		spd[h]		= 0
-		spd[h]		= 6*hdir
-		spd[v]		= -2
-			
+		spd[h]		= 5*hdir
+		spd[v]		= -3
 	} else if spd[v] > -.3 {
 		state	= p_st.jump_fall
 		image_index	= 0
@@ -251,7 +273,7 @@ st_ev[p_st.fall]	= function() {
 	event_p_wall_hang()
 	event_gravity()
 	event_p_hinput()
-		
+	mask_index	= mask_p
 	event_animation(s_p_fall,1)
 		
 		
@@ -267,19 +289,20 @@ st_ev[p_st.jump_fall]	= function() {
 	event_p_wall_hang()
 	event_gravity()
 	event_p_hinput()
-		
+	mask_index	= mask_p	
 	event_animation(s_p_jump_fall,1)
 		
-	if event_p_attack() {
+	if event_p_attack_air() {
 		spd[v] = 0
-	}
-	else if key_dash {
+	} else if key_dash {
+		trail_alpha	= 1
+		var fx	= instance_create_depth(x-hdir*16,y-16,depth,o_fx)
+		fx.image_xscale	= hdir
 		state		= p_st.roll_throw
 		image_index	= 0
 		sprite_index	= s_p_roll_throw
-		spd[h]		= 0
-		spd[h]		= 6*hdir
-		spd[v]		= -2
+		spd[h]		= 5*hdir
+		spd[v]		= -3
 	} else if animation_end() {
 		state		= p_st.fall
 		image_index	= 0
@@ -292,8 +315,8 @@ st_ev[p_st.roll_throw]	= function() {
 	event_gravity()
 	event_p_wall_hang()
 	event_p_hinput(false,true,true,.15, .1)
-	
-		
+	mask_index	= mask_p_roll_throw	
+	image_xscale	= hdir
 	if animation_end() {
 		im_speed	= 0
 	}
@@ -311,9 +334,9 @@ st_ev[p_st.roll]	= function() {
 	event_gravity()
 	event_p_hinput(true,true,true,.2,.1)
 	event_p_wall_hang()
-		
+	mask_index	= mask_p_land
 	sprite_index	= s_p_roll_land
-		
+	
 	event_p_attack()
 		
 	if animation_end() {
@@ -332,7 +355,9 @@ st_ev[p_st.roll_back]	= function() {
 
 st_ev[p_st.wall_hang]	= function() {
 	event_animation(s_p_wall_hang)
-		
+	mask_index	= mask_p
+	
+	
 	var _wall	= instance_place(x+hdir*4,y,o_solid)
 	if _wall {
 		var _xcorner	= _wall.x+_wall.image_xscale*64*(1-hdir)/2
@@ -340,7 +365,8 @@ st_ev[p_st.wall_hang]	= function() {
 		x	= _xcorner-8*hdir
 		y	= _ycorner+28
 	}
-		
+	
+	
 	spd[v]	= 0
 	spd[h]	= 0
 	
@@ -359,21 +385,21 @@ st_ev[p_st.wall_hang]	= function() {
 			state	= p_st.wall_climb
 			sprite_index	= s_p_wall_climb
 			image_index		= 0
-			/*
-			state	= p_st.jump
-			spd[v] = -spd_max[v]/1.3
-			spd[h] = hdir*2
-			*/
+			
+			//state	= p_st.jump
+			//spd[v] = -spd_max[v]/1.3
+			//spd[h] = hdir*2
+			
 		} else if _k == -hdir {
 			x-=hdir
 			state	= p_st.fall
 		} 
 	}
-		
 }
 
 st_ev[p_st.wall_climb]	= function() {
 	event_animation(s_p_wall_climb,1)
+	mask_index	= mask_p
 	/*
 	if key_jump {
 		spd[v]	= -spd_max[v]/1.3
@@ -405,11 +431,11 @@ st_ev[p_st.atk_00]	= function() {
 		coyote_atk_i	= 1
 			
 		if buffer_atk > 0 {
-			var _atk	= instance_create_depth(x,y,depth,o_p_atk)
+			var _atk			= instance_create_depth(x,y,depth,o_p_atk)
 			_atk.image_xscale	= hdir
-			state		= p_st.atk_00+buffer_atk_i
-			image_index	= 0
-			sprite_index	= s_p_atk_01
+			state				= p_st.atk_00+buffer_atk_i
+			image_index			= 0
+			sprite_index		= s_p_atk_01
 		}
 	} else if image_index > 2 {
 		if event_p_dash() {}
@@ -436,11 +462,11 @@ st_ev[p_st.atk_01]	= function() {
 		coyote_atk_i	= 2
 			
 		if buffer_atk > 0 {
-			var _atk	= instance_create_depth(x,y,depth,o_p_atk)
+			var _atk			= instance_create_depth(x,y,depth,o_p_atk)
 			_atk.image_xscale	= hdir
-			state		= p_st.atk_00+buffer_atk_i
-			image_index	= 0
-			sprite_index	= s_p_atk_02
+			state				= p_st.atk_00+buffer_atk_i
+			image_index			= 0
+			sprite_index		= s_p_atk_02
 		}
 	} else if image_index > 2 {
 		if event_p_dash() {}
@@ -455,23 +481,23 @@ st_ev[p_st.atk_02]	= function() {
 	event_p_collision()
 	//event_gravity()
 	event_animation(s_p_atk_02,1)
-		
-	if image_index > 2 event_p_jump()
 	spd[h]			= lerp(spd[h],0,.2)
-		
-	if image_index > 2 {
-		event_p_dash()
-	}
+	
 	if animation_end() {
 		if hinput != 0 state	= p_st.run
 		else state	= p_st.idle
 	}
+	if image_index > 2 {
+		if event_p_dash() {}
+		else event_p_jump() {}
+	}
+	
 		
 }
 
 st_ev[p_st.atk_air_00]	= function() {
 	event_p_collision()
-	event_animation(s_p_atk_00,1)
+	event_animation(s_p_atk_air_00,1)
 
 	spd[h]			= lerp(spd[h],0,.2)
 		
@@ -568,5 +594,26 @@ state			= p_st.idle
 
 #region Timers
 
+timer_ev[0] = function() {}
+
+timer_ev[1] = function() {
+	var _atk	= instance_create_depth(x,y,depth,o_p_atk)
+	_atk.image_xscale	= hdir
+}
+
+//Variables y funcionamiento de timers
+timer_amount	= 2
+
+for (var i = 0; i < timer_amount; ++i) {
+	timer[i]		= -1
+}
 
 #endregion
+
+for (var i = 0; i < 12; ++i) {
+	trail_coor[i]	= [x,y]
+}
+
+trail_alpha	= 1
+
+time_falling	= 0

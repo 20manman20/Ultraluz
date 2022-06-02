@@ -215,11 +215,13 @@ for (var i = 0; i < timer_amount; ++i) {
 	timer[i]		= -1
 }
 
-#endregion
-
 //Iniciar timers aparte
 timer[tm_change_dir]	= irandom_range(30,60)
 timer[tm_change_idle_walk]	= irandom_range(60,90)
+
+#endregion
+
+
 
 det_front	= 120
 det_behind	= 50 

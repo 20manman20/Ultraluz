@@ -1,57 +1,29 @@
 #region Eventos solo para el jugador
 function event_p_jump() {
-	/*
-	if key_jump && bol_floor {
-		im_scale[h] = .7
-		im_scale[v] = 1.5
+	if !bol_floor && coyote > 0 && !jumped && key_jump {
+		im_scale[h] = .6
+		im_scale[v] = 1.7
 		state	= p_st.jump
 		spd[v]	= -spd_max[v]/1.3
+		y--
+		jumped	= true  
 	}
-	
-	if key_jump_r && spd[v] < 0 {
-		spd[v]	*= .5
-	}
-	*/
-	
-	
-	
-	/*
-	if !bol_floor {
-		if coyote > 0 {
-			coyote--
-			if !jumped && key_jump {
-				spd[v]	= -spd_max[v]/1.3
-				im_scale[h] = .8
-				im_scale[v] = 1.4
-				state	= p_st.jump
-				jumped	= true
-			}
-		}
-	} else {
-		jumped	= false
-		coyote	= coyote_max
-	}
-
 
 	if key_jump buffer = buffer_max
 
-	if buffer > 0 {
-		buffer--
-		if bol_floor {
-			spd[v]	= -spd_max[v]/1.3
-			im_scale[h] = .8
-			im_scale[v] = 1.4
-			state	= p_st.jump
-			buffer = 0
-			jumped	= true
-		}
+	if buffer > 0 && bol_floor {
+		im_scale[h] = .6
+		im_scale[v] = 1.7
+		state	= p_st.jump
+		spd[v]	= -spd_max[v]/1.3
+		buffer = 0
+		y--
+		jumped	= true
 	}
-
-	if key_jump_r && spd[v] < 0 {
-		spd[v]	*= .5
-	}
-	*/
+	
 }
+
+
 
 function event_p_dash() {
 	if key_dash {
@@ -75,11 +47,26 @@ function event_p_dash() {
 }
 
 function event_p_wall_hang() {
-	if spd[v] > -2 && !bol_floor && !place_meeting(x+hdir*(4),y-sprite_height-3,o_solid) && place_meeting(x+hdir*(4),y-sprite_height+1,o_solid) {
+	var was_free	= !position_meeting(x+(12+spd[h]*2)*hdir,bbox_top-8,o_solid)
+	var isnt_free	= position_meeting(x+(12+spd[h]*2)*hdir,bbox_top-1,o_solid)
+	/*
+	if spd[v] > -2 && !bol_floor && !place_meeting(x+hdir*6,bbox_top-3,o_solid) && place_meeting(x+hdir*(4),bbox_top+1,o_solid) {
 		state	= p_st.wall_hang
 		im_scale[h]	= 1.2
 		im_scale[v]	= .8
 	}
+	*/
+	
+	if was_free && isnt_free && spd[v] > 0  {
+		im_scale[h]	= 1.2
+		im_scale[v]	= .8
+		spd	= [0,0]
+		state	= p_st.wall_hang
+		while !place_meeting(x+hdir,y,o_solid) {
+			x+=hdir
+		}
+
+	}	
 }
 	
 function event_p_hinput(_flip = true, _keys = true, _hsp = true, _acc = spd_acc[h], _fric = spd_acc[h]) {
@@ -97,13 +84,10 @@ function event_p_hinput(_flip = true, _keys = true, _hsp = true, _acc = spd_acc[
 	
 function event_p_attack() {
 	if key_atk {
+		timer[1]	= HITBOX_TIMER
 		if coyote_atk > 0 {
-			var _atk	= instance_create_depth(x,y,depth,o_p_atk)
-			_atk.image_xscale	= hdir
 			state		= p_st.atk_00 + coyote_atk_i
 		} else {
-			var _atk	= instance_create_depth(x,y,depth,o_p_atk)
-			_atk.image_xscale	= hdir
 			state		= p_st.atk_00
 			sprite_index	= s_p_atk_00
 		}
@@ -113,8 +97,7 @@ function event_p_attack() {
 
 function event_p_attack_air() {
 	if key_atk {
-		var _atk	= instance_create_depth(x,y,depth,o_p_atk)
-		_atk.image_xscale	= hdir
+		timer[1]	= HITBOX_TIMER
 		sprite_index	= s_p_atk_air_02
 		state		= p_st.atk_air_02
 		image_index	= 0
@@ -136,11 +119,12 @@ function event_p_collision() {
 
 	repeat (abs(spd_final[v]*COL_TIME)*game_spd) {
 		if place_meeting(x,y+sign(spd_final[v]),o_solid) {
-			spd[v]	= 0
+			
 			if state	== p_st.swing {
 				rope_angle	= point_direction(grapple[h],grapple[v],x,y)
 				rope_angle_spd	= 0
 			}
+			spd[v]	= 0
 			break
 		}  else y += sign(spd_final[v])/COL_TIME
 	}
@@ -150,7 +134,10 @@ function event_p_collision() {
 
 function event_gravity(_fall_st = false) {
 	if !bol_floor {
-		if _fall_st && spd[v] > 0 state	= p_st.fall
+		if _fall_st {
+			if spd[v] > 0 state	= p_st.fall
+			if spd[v] < 0 state = p_st.jump_fall
+		}
 		spd[v]	= approach(spd[v],spd_max[v],spd_acc[v])
 	}
 }
@@ -180,6 +167,5 @@ function event_damage() {
 	}
 	return (bol_hit && timer[TIMER_DMG]	== -1)
 }
-
 
 
