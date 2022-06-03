@@ -105,8 +105,8 @@
   ],
   "nineSlice": null,
   "parent": {
-    "name": "Sounds",
-    "path": "folders/Sounds.yy",
+    "name": "En 00",
+    "path": "folders/En 00.yy",
   },
   "resourceVersion": "1.0",
   "name": "s_en_01_atk",

@@ -51,7 +51,7 @@ switch (state) {
 		event_gravity(true)
 		event_p_hinput()
 		
-		event_animation(s_p_idle,1)
+		event_animation(spr[p_sp.idle,1)
 		
 		if abs(spd[h]) > 0 {
 			state	= p_st.run
@@ -68,7 +68,7 @@ switch (state) {
 		event_gravity(true)
 		event_p_hinput()
 	 
-		event_animation(s_p_run)
+		event_animation(spr[p_sp.run)
 		
 		if hinput == 0 {
 			im_speed	= abs(spd[h])/spd_max[h]
@@ -76,7 +76,7 @@ switch (state) {
 		} else if hinput = -sign(spd[h]) {
 			state		= p_st.turn_around
 			image_index	= 0
-			sprite_index	= s_p_turn_around
+			sprite_index	= spr[p_sp.turn_around
 		} else im_speed		= 1
 		
 		if event_p_dash() {}
@@ -89,7 +89,7 @@ switch (state) {
 		event_gravity(true)
 		event_p_hinput()
 		
-		event_animation(s_p_turn_around,1)
+		event_animation(spr[p_sp.turn_around,1)
 		
 		if event_p_dash() {}
 		else if event_p_attack() {}
@@ -107,13 +107,13 @@ switch (state) {
 		event_gravity()
 		event_p_hinput()
 		
-		event_animation(s_p_jump,1)
+		event_animation(spr[p_sp.jump,1)
 		
 		if event_p_attack_air() {}
 		else if key_dash {
 			state		= p_st.roll_throw
 			image_index	= 0
-			sprite_index	= s_p_roll_throw
+			sprite_index	= spr[p_sp.roll_throw
 			spd[h]		= 0
 			spd[h]		= 6*hdir
 			spd[v]		= -2
@@ -121,7 +121,7 @@ switch (state) {
 		} else if spd[v] > -.3 {
 			state	= p_st.jump_fall
 			image_index	= 0
-			sprite_index	= s_p_jump_fall
+			sprite_index	= spr[p_sp.jump_fall
 		}
 		break
 		
@@ -130,20 +130,20 @@ switch (state) {
 		event_gravity()
 		event_p_hinput()
 		
-		event_animation(s_p_jump_fall,1)
+		event_animation(spr[p_sp.jump_fall,1)
 		
 		if event_p_attack_air() {}
 		else if key_dash {
 			state		= p_st.roll_throw
 			image_index	= 0
-			sprite_index	= s_p_roll_throw
+			sprite_index	= spr[p_sp.roll_throw
 			spd[h]		= 0
 			spd[h]		= 6*hdir
 			spd[v]		= -2
 		} else if animation_end() {
 			state		= p_st.fall
 			image_index	= 0
-			sprite_index	= s_p_fall
+			sprite_index	= spr[p_sp.fall
 		}
 		break
 	case p_st.fall:
@@ -151,7 +151,7 @@ switch (state) {
 		event_gravity()
 		event_p_hinput()
 		
-		event_animation(s_p_fall,1)
+		event_animation(spr[p_sp.fall,1)
 		
 		
 		if bol_floor {
@@ -163,7 +163,7 @@ switch (state) {
 		
 	case p_st.atk_00:
 		event_gravity()
-		event_animation(s_p_atk_00,1)
+		event_animation(spr[p_sp.atk_00,1)
 		
 		if image_index > 2 event_p_jump()
 
@@ -180,7 +180,7 @@ switch (state) {
 				_atk.image_xscale	= hdir
 				state		= p_st.atk_00+buffer_atk_i
 				image_index	= 0
-				sprite_index	= s_p_atk_01
+				sprite_index	= spr[p_sp.atk_01
 			}
 		} else if image_index > 2 {
 			if event_p_dash() {}
@@ -193,7 +193,7 @@ switch (state) {
 		
 	case p_st.atk_01:
 		event_gravity()
-		event_animation(s_p_atk_01,1)
+		event_animation(spr[p_sp.atk_01,1)
 		
 		if image_index > 2 event_p_jump()
 		
@@ -210,7 +210,7 @@ switch (state) {
 				_atk.image_xscale	= hdir
 				state		= p_st.atk_00+buffer_atk_i
 				image_index	= 0
-				sprite_index	= s_p_atk_02
+				sprite_index	= spr[p_sp.atk_02
 			}
 		} else if image_index > 2 {
 			if event_p_dash() {}
@@ -223,7 +223,7 @@ switch (state) {
 		break
 	case p_st.atk_02:
 		event_gravity()
-		event_animation(s_p_atk_02,1)
+		event_animation(spr[p_sp.atk_02,1)
 		
 		if image_index > 2 event_p_jump()
 		spd[h]			= lerp(spd[h],0,.2)
@@ -240,7 +240,7 @@ switch (state) {
 		
 	case p_st.dash:
 		event_gravity(true)
-		event_animation(s_p_roll_land,1)
+		event_animation(spr[p_sp.roll_land,1)
 		var _key_i	= key_right - key_left
 		
 		if image_index < 1 && _key_i == -hdir {
@@ -259,7 +259,7 @@ switch (state) {
 		break
 	case p_st.dash_back:
 		event_gravity(true)
-		event_animation(s_p_roll_land64,1)
+		event_animation(spr[p_sp.roll_land64,1)
 		
 		if key_dash_r spd_push[h]*=.3
 		
@@ -283,7 +283,7 @@ switch (state) {
 			state		= p_st.roll
 			image_index		= 0
 			im_speed		= 1
-			sprite_index	= s_p_roll_land
+			sprite_index	= spr[p_sp.roll_land
 		}
 		break
 	case p_st.roll:
@@ -291,7 +291,7 @@ switch (state) {
 		event_p_hinput(true,true,true,.2,.1)
 		event_p_wall_hang()
 		
-		sprite_index	= s_p_roll_land
+		sprite_index	= spr[p_sp.roll_land
 		
 		event_p_attack()
 		
@@ -308,7 +308,7 @@ switch (state) {
 		
 		spd[h]			= 0
 		
-		sprite_index	= s_p_hit
+		sprite_index	= spr[p_sp.hit
 		if hit_time > 0 {
 			hit_time--
 		} else {
@@ -317,7 +317,7 @@ switch (state) {
 		}
 		break
 	case p_st.wall_hang:
-		event_animation(s_p_wall_hang) 
+		event_animation(spr[p_sp.wall_hang) 
 		
 		var _wall	= instance_place(x+hdir*4,y,o_solid)
 		if _wall {
@@ -332,7 +332,7 @@ switch (state) {
 		
 		if key_jump {
 			state	= p_st.wall_climb
-			sprite_index	= s_p_wall_climb
+			sprite_index	= spr[p_sp.wall_climb
 			image_index		= 0
 			/*
 			state	= p_st.jump
@@ -347,12 +347,12 @@ switch (state) {
 			im_speed	= 0
 			x	+= 15
 			y	-= 28
-			sprite_index	= s_p_idle
+			sprite_index	= spr[p_sp.idle
 			state	= p_st.idle
 		}
 		break
 	case p_st.swing:
-		event_animation(s_p_idle,1)
+		event_animation(spr[p_sp.idle,1)
 		var _rope_angle_acc	= -rope_acc * dcos(rope_angle)
 		_rope_angle_acc += (key_right-key_left)*0.1
 		rope_angle_spd += _rope_angle_acc
@@ -371,7 +371,7 @@ switch (state) {
 		break
 	case p_st.atk_air_02:
 		event_gravity()
-		event_animation(s_p_atk_air_02,1)
+		event_animation(spr[p_sp.atk_air_02,1)
 		
 		spd[h]			= lerp(spd[h],0,.2)
 		
@@ -383,7 +383,7 @@ switch (state) {
 		break
 	case p_st.atk_air_00:
 		
-		event_animation(s_p_atk_00,1)
+		event_animation(spr[p_sp.atk_00,1)
 
 		spd[h]			= lerp(spd[h],0,.2)
 		
@@ -396,18 +396,18 @@ switch (state) {
 				_atk.image_xscale	= hdir
 				state		= p_st.atk_01
 				image_index	= 0
-				sprite_index	= s_p_atk_01
+				sprite_index	= spr[p_sp.atk_01
 			}
 		} else if key_atk && image_index > 2 {
 			buffer_atk = buffer_atk_max
 		}
 		break
 	case p_st.atk_air_02_fall:
-		event_animation(s_p_atk_air_02_fall,1)
+		event_animation(spr[p_sp.atk_air_02_fall,1)
 		if bol_floor state = p_st.atk_air_02_land
 		break
 	case p_st.atk_air_02_land:
-		event_animation(s_p_atk_air_02_land,1)
+		event_animation(spr[p_sp.atk_air_02_land,1)
 		if animation_end() state = p_st.idle
 		break
 }

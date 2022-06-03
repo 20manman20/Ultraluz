@@ -17,10 +17,12 @@ key_dash	= keyboard_check_pressed(ord("C"))
 key_dash_r	= keyboard_check_released(ord("C"))
 
 bol_roof	= place_meeting(x,y-2,o_solid)
-bol_floor	= place_meeting(x,y+1,o_solid)
+bol_floor	= place_meeting(x,y+2,o_solid)
 
-spd_final[h]	= spd[h] + spd_push[h]
-spd_final[v]	= spd[v] + spd_push[v]
+bol_slope	= place_meeting(x,y+2,o_slope)
+
+spd_final[h]	= (spd[h] + spd_push[h])*(1-.2*bol_slope)
+spd_final[v]	= (spd[v] + spd_push[v])*(1-.2*bol_slope)
 
 if game_spd {
 	spd_push[h]	= approach(spd_push[h],0,.2)

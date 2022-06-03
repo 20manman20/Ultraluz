@@ -117,8 +117,8 @@
   ],
   "nineSlice": null,
   "parent": {
-    "name": "Ultraluz 48",
-    "path": "Ultraluz 48.yyp",
+    "name": "Sprites",
+    "path": "folders/Sprites.yy",
   },
   "resourceVersion": "1.0",
   "name": "lilspook",

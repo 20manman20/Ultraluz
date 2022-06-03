@@ -7,9 +7,9 @@
   "edgeFiltering": false,
   "collisionTolerance": 0,
   "swfPrecision": 2.525,
-  "bbox_left": 48,
-  "bbox_right": 68,
-  "bbox_top": 44,
+  "bbox_left": 49,
+  "bbox_right": 67,
+  "bbox_top": 45,
   "bbox_bottom": 76,
   "HTile": false,
   "VTile": false,
@@ -24,15 +24,15 @@
   "gridX": 0,
   "gridY": 0,
   "frames": [
-    {"compositeImage":{"FrameId":{"name":"8b46c3c3-c319-4319-8337-a2082215bb67","path":"sprites/__WallHang/__WallHang.yy",},"LayerId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},"images":[
-        {"FrameId":{"name":"8b46c3c3-c319-4319-8337-a2082215bb67","path":"sprites/__WallHang/__WallHang.yy",},"LayerId":{"name":"f3084cf4-1a04-402f-9495-f8dc47efa0e0","path":"sprites/__WallHang/__WallHang.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
-      ],"parent":{"name":"__WallHang","path":"sprites/__WallHang/__WallHang.yy",},"resourceVersion":"1.0","name":"8b46c3c3-c319-4319-8337-a2082215bb67","tags":[],"resourceType":"GMSpriteFrame",},
+    {"compositeImage":{"FrameId":{"name":"f03730a7-62d8-4b40-a5ff-8c4a48104102","path":"sprites/__WallHang/__WallHang.yy",},"LayerId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},"images":[
+        {"FrameId":{"name":"f03730a7-62d8-4b40-a5ff-8c4a48104102","path":"sprites/__WallHang/__WallHang.yy",},"LayerId":{"name":"743073a2-62b5-4824-850f-575bb962050a","path":"sprites/__WallHang/__WallHang.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
+      ],"parent":{"name":"__WallHang","path":"sprites/__WallHang/__WallHang.yy",},"resourceVersion":"1.0","name":"f03730a7-62d8-4b40-a5ff-8c4a48104102","tags":[],"resourceType":"GMSpriteFrame",},
   ],
   "sequence": {
     "spriteId": {"name":"__WallHang","path":"sprites/__WallHang/__WallHang.yy",},
     "timeUnits": 1,
     "playback": 1,
-    "playbackSpeed": 30.0,
+    "playbackSpeed": 0.0,
     "playbackSpeedType": 0,
     "autoRecord": true,
     "volume": 1.0,
@@ -41,7 +41,7 @@
     "moments": {"Keyframes":[],"resourceVersion":"1.0","resourceType":"KeyframeStore<MomentsEventKeyframe>",},
     "tracks": [
       {"name":"frames","spriteId":null,"keyframes":{"Keyframes":[
-            {"id":"2568fea1-5c79-4053-a74e-0dfe1df12dec","Key":0.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"8b46c3c3-c319-4319-8337-a2082215bb67","path":"sprites/__WallHang/__WallHang.yy",},"resourceVersion":"1.0","resourceType":"SpriteFrameKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<SpriteFrameKeyframe>",},
+            {"id":"4fff3b87-67e3-494d-911f-5f4a4f9a9b39","Key":0.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"f03730a7-62d8-4b40-a5ff-8c4a48104102","path":"sprites/__WallHang/__WallHang.yy",},"resourceVersion":"1.0","resourceType":"SpriteFrameKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<SpriteFrameKeyframe>",},
           ],"resourceVersion":"1.0","resourceType":"KeyframeStore<SpriteFrameKeyframe>",},"trackColour":0,"inheritsTrackColour":true,"builtinName":0,"traits":0,"interpolation":1,"tracks":[],"events":[],"isCreationTrack":false,"resourceVersion":"1.0","tags":[],"resourceType":"GMSpriteFramesTrack","modifiers":[],},
     ],
     "visibleRange": null,
@@ -65,12 +65,12 @@
     "resourceType": "GMSequence",
   },
   "layers": [
-    {"visible":true,"isLocked":false,"blendMode":0,"opacity":100.0,"displayName":"default","resourceVersion":"1.0","name":"f3084cf4-1a04-402f-9495-f8dc47efa0e0","tags":[],"resourceType":"GMImageLayer",},
+    {"visible":true,"isLocked":false,"blendMode":0,"opacity":100.0,"displayName":"default","resourceVersion":"1.0","name":"743073a2-62b5-4824-850f-575bb962050a","tags":[],"resourceType":"GMImageLayer",},
   ],
   "nineSlice": null,
   "parent": {
-    "name": "Shaders",
-    "path": "folders/Shaders.yy",
+    "name": "New Player",
+    "path": "folders/New Player.yy",
   },
   "resourceVersion": "1.0",
   "name": "__WallHang",

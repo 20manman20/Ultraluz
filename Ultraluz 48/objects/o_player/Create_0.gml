@@ -58,13 +58,23 @@ im_speed		= 1
 im_angle		= 0
 hdir			= 1
 
+//Variables de salto
 coyote			= 0
-coyote_max		= 30
+coyote_max		= 5
 
 buffer			= 0
 buffer_max		= 5
 
 jumped			= false
+
+time_falling	= 0
+
+//Variables de rastro
+for (var i = 0; i < 12; ++i) {
+	trail_coor[i]	= [x,y]
+}
+
+trail_alpha	= 1
 
 
 depth	-= 2
@@ -136,7 +146,7 @@ st_ev[p_st.idle]	= function() {
 	event_gravity(true)
 	event_p_hinput()
 	mask_index	= mask_p
-	event_animation(s_p_idle44,1)
+	event_animation(spr[p_sp.idle],1)
 		
 	if abs(spd[h]) > 0 {
 		state	= p_st.run
@@ -154,7 +164,7 @@ st_ev[p_st.run]	= function() {
 	event_gravity(true)
 	event_p_hinput()
 	mask_index	= mask_p
-	event_animation(s_p_run)
+	event_animation(spr[p_sp.run])
 		
 	var _ram	= irandom_range(0,3)
 	
@@ -175,7 +185,7 @@ st_ev[p_st.run]	= function() {
 	} else if hinput = -sign(spd[h]) {
 		state		= p_st.turn_around
 		image_index	= 0
-		sprite_index	= s_p_turn_around
+		sprite_index	= spr[p_sp.turn_around]
 	} else im_speed		= 1
 		
 	if event_p_dash() {}
@@ -189,7 +199,7 @@ st_ev[p_st.turn_around]	= function() {
 	event_gravity(true)
 	event_p_hinput()
 	mask_index	= mask_p
-	event_animation(s_p_turn_around,1)
+	event_animation(spr[p_sp.turn_around],1)
 		
 	if event_p_dash() {}
 	else if event_p_attack() {}
@@ -207,7 +217,12 @@ st_ev[p_st.dash]	= function() {
 	event_gravity(true)
 	mask_index	= mask_p_land
 	trail_alpha	= 1
-	event_animation(s_p_slide,1)
+	var _angle	= 45*bol_slope
+	
+	
+	event_animation(spr[p_sp.slide],1,image_index,_angle)
+	
+	
 	var _key_i	= key_right - key_left
 
 	if image_index < 1 && _key_i == -hdir {
@@ -229,7 +244,7 @@ st_ev[p_st.dash_back]	= function() {
 	event_gravity(true)
 	mask_index	= mask_p_land
 	trail_alpha	= 1
-	event_animation(s_p_slide,1)
+	event_animation(spr[p_sp.slide],1)
 		
 	if key_dash_r spd_push[h]*=.3
 		
@@ -246,7 +261,7 @@ st_ev[p_st.jump]	= function() {
 	event_gravity()
 	event_p_hinput()
 	mask_index	= mask_p
-	event_animation(s_p_jump,1)
+	event_animation(spr[p_sp.jump],1)
 		
 	if event_p_attack_air() {
 		spd[v] = 0
@@ -257,13 +272,13 @@ st_ev[p_st.jump]	= function() {
 		fx.image_xscale	= hdir
 		state		= p_st.roll_throw
 		image_index	= 0
-		sprite_index	= s_p_roll_throw
+		sprite_index	= spr[p_sp.roll_throw]
 		spd[h]		= 5*hdir
 		spd[v]		= -3
 	} else if spd[v] > -.3 {
 		state	= p_st.jump_fall
 		image_index	= 0
-		sprite_index	= s_p_jump_fall
+		sprite_index	= spr[p_sp.jump_fall]
 	}
 }
 
@@ -274,7 +289,7 @@ st_ev[p_st.fall]	= function() {
 	event_gravity()
 	event_p_hinput()
 	mask_index	= mask_p
-	event_animation(s_p_fall,1)
+	event_animation(spr[p_sp.fall],1)
 		
 		
 	if bol_floor {
@@ -290,7 +305,7 @@ st_ev[p_st.jump_fall]	= function() {
 	event_gravity()
 	event_p_hinput()
 	mask_index	= mask_p	
-	event_animation(s_p_jump_fall,1)
+	event_animation(spr[p_sp.jump_fall],1)
 		
 	if event_p_attack_air() {
 		spd[v] = 0
@@ -300,13 +315,13 @@ st_ev[p_st.jump_fall]	= function() {
 		fx.image_xscale	= hdir
 		state		= p_st.roll_throw
 		image_index	= 0
-		sprite_index	= s_p_roll_throw
+		sprite_index	= spr[p_sp.roll_throw]
 		spd[h]		= 5*hdir
 		spd[v]		= -3
 	} else if animation_end() {
 		state		= p_st.fall
 		image_index	= 0
-		sprite_index	= s_p_fall
+		sprite_index	= spr[p_sp.fall]
 	}
 }
 
@@ -325,7 +340,7 @@ st_ev[p_st.roll_throw]	= function() {
 		state		= p_st.roll
 		image_index		= 0
 		im_speed		= 1
-		sprite_index	= s_p_roll_land
+		sprite_index	= spr[p_sp.roll_land]
 	}
 }
 
@@ -335,7 +350,7 @@ st_ev[p_st.roll]	= function() {
 	event_p_hinput(true,true,true,.2,.1)
 	event_p_wall_hang()
 	mask_index	= mask_p_land
-	sprite_index	= s_p_roll_land
+	sprite_index	= spr[p_sp.roll_land]
 	
 	event_p_attack()
 		
@@ -354,7 +369,7 @@ st_ev[p_st.roll_back]	= function() {
 }
 
 st_ev[p_st.wall_hang]	= function() {
-	event_animation(s_p_wall_hang)
+	event_animation(spr[p_sp.wall_hang])
 	mask_index	= mask_p
 	
 	
@@ -383,7 +398,7 @@ st_ev[p_st.wall_hang]	= function() {
 	} else {
 		if _k == hdir {
 			state	= p_st.wall_climb
-			sprite_index	= s_p_wall_climb
+			sprite_index	= spr[p_sp.wall_climb]
 			image_index		= 0
 			
 			//state	= p_st.jump
@@ -398,7 +413,7 @@ st_ev[p_st.wall_hang]	= function() {
 }
 
 st_ev[p_st.wall_climb]	= function() {
-	event_animation(s_p_wall_climb,1)
+	event_animation(spr[p_sp.wall_climb],1)
 	mask_index	= mask_p
 	/*
 	if key_jump {
@@ -410,7 +425,7 @@ st_ev[p_st.wall_climb]	= function() {
 		im_speed	= 0
 		x	+= 15*hdir
 		y	-= 28
-		sprite_index	= s_p_idle
+		sprite_index	= spr[p_sp.idle]
 		state	= p_st.idle
 	}
 }
@@ -418,7 +433,7 @@ st_ev[p_st.wall_climb]	= function() {
 st_ev[p_st.atk_00]	= function() {
 	event_p_collision()
 	//event_gravity()
-	event_animation(s_p_atk_00,1)
+	event_animation(spr[p_sp.atk_00],1)
 		
 	if image_index > 2 event_p_jump()
 
@@ -435,7 +450,7 @@ st_ev[p_st.atk_00]	= function() {
 			_atk.image_xscale	= hdir
 			state				= p_st.atk_00+buffer_atk_i
 			image_index			= 0
-			sprite_index		= s_p_atk_01
+			sprite_index		= spr[p_sp.atk_01]
 		}
 	} else if image_index > 2 {
 		if event_p_dash() {}
@@ -449,7 +464,7 @@ st_ev[p_st.atk_00]	= function() {
 st_ev[p_st.atk_01]	= function() {
 	event_p_collision()
 	//event_gravity()
-	event_animation(s_p_atk_01,1)
+	event_animation(spr[p_sp.atk_01],1)
 		
 	if image_index > 2 event_p_jump()
 		
@@ -466,7 +481,7 @@ st_ev[p_st.atk_01]	= function() {
 			_atk.image_xscale	= hdir
 			state				= p_st.atk_00+buffer_atk_i
 			image_index			= 0
-			sprite_index		= s_p_atk_02
+			sprite_index		= spr[p_sp.atk_02]
 		}
 	} else if image_index > 2 {
 		if event_p_dash() {}
@@ -480,7 +495,7 @@ st_ev[p_st.atk_01]	= function() {
 st_ev[p_st.atk_02]	= function() {
 	event_p_collision()
 	//event_gravity()
-	event_animation(s_p_atk_02,1)
+	event_animation(spr[p_sp.atk_02],1)
 	spd[h]			= lerp(spd[h],0,.2)
 	
 	if animation_end() {
@@ -497,7 +512,7 @@ st_ev[p_st.atk_02]	= function() {
 
 st_ev[p_st.atk_air_00]	= function() {
 	event_p_collision()
-	event_animation(s_p_atk_air_00,1)
+	event_animation(spr[p_sp.atk_air_00],1)
 
 	spd[h]			= lerp(spd[h],0,.2)
 		
@@ -510,7 +525,7 @@ st_ev[p_st.atk_air_00]	= function() {
 			_atk.image_xscale	= hdir
 			state		= p_st.atk_01
 			image_index	= 0
-			sprite_index	= s_p_atk_01
+			sprite_index	= spr[p_sp.atk_01]
 		}
 	} else if key_atk && image_index > 2 {
 		buffer_atk = buffer_atk_max
@@ -524,7 +539,7 @@ st_ev[p_st.atk_air_01]	= function() {
 st_ev[p_st.atk_air_02]	= function() {
 	event_p_collision()
 	event_gravity()
-	event_animation(s_p_atk_air_02,1)
+	event_animation(spr[p_sp.atk_air_02],1)
 		
 	spd[h]			= lerp(spd[h],0,.2)
 		
@@ -536,13 +551,13 @@ st_ev[p_st.atk_air_02]	= function() {
 
 st_ev[p_st.atk_air_02_fall]	= function() {
 	event_p_collision()
-	event_animation(s_p_atk_air_02_fall,1)
+	event_animation(spr[p_sp.atk_air_02_fall],1)
 		if bol_floor state = p_st.atk_air_02_land
 }
 
 st_ev[p_st.atk_air_02_land]	= function() {
 	event_p_collision()
-	event_animation(s_p_atk_air_02_land,1)
+	event_animation(spr[p_sp.atk_air_02_land],1)
 	if animation_end() state = p_st.idle
 }
 
@@ -552,7 +567,7 @@ st_ev[p_st.hit]	= function() {
 		
 	spd[h]			= 0
 		
-	sprite_index	= s_p_hit
+	sprite_index	= spr[p_sp.hit]
 	if hit_time > 0 {
 		hit_time--
 	} else {
@@ -563,7 +578,7 @@ st_ev[p_st.hit]	= function() {
 
 st_ev[p_st.swing]	= function() {
 	event_p_collision()
-	event_animation(s_p_swing,1, image_index, point_direction(x,y,grapple[h],grapple[v])-90)
+	event_animation(spr[p_sp.swing],1, image_index, point_direction(x,y,grapple[h],grapple[v])-90)
 	var _rope_angle_acc	= -rope_acc * dcos(rope_angle)
 	_rope_angle_acc += (key_right-key_left)*0.03
 	rope_length	+= (key_down-key_up)*2
@@ -610,10 +625,81 @@ for (var i = 0; i < timer_amount; ++i) {
 
 #endregion
 
-for (var i = 0; i < 12; ++i) {
-	trail_coor[i]	= [x,y]
+#region	Nombre de los sprites
+
+enum p_sp {
+	idle,
+	run,
+	turn_around,
+	atk_00,
+	atk_01,
+	atk_02,
+	roll_land,
+	roll_land_back,
+	jump,
+	jump_fall,
+	fall,
+	wall_hang,
+	wall_climb,
+	swing,
+	slide,
+	roll_throw,
+	atk_air_00,
+	atk_air_01,
+	atk_air_02,
+	atk_air_02_fall,
+	atk_air_02_land,
+	hit
 }
 
-trail_alpha	= 1
+/*
+spr	= [	s_p_idle44,
+		s_p_run,
+		s_p_turn_around,
+		s_p_atk_00,
+		s_p_atk_01,
+		s_p_atk_02,
+		s_p_roll_land,
+		s_p_roll_land_back,
+		s_p_jump,
+		s_p_jump_fall,
+		s_p_fall,
+		s_p_wall_hang,
+		s_p_wall_climb,
+		s_p_swing,
+		s_p_slide,
+		s_p_roll_throw,
+		s_p_atk_air_00,
+		s_p_atk_air_01,
+		s_p_atk_air_02,
+		s_p_atk_air_02_fall,
+		s_p_atk_air_02_land,
+		s_p_hit]
+*/
 
-time_falling	= 0
+spr	= [	__Idle,
+		__Run,
+		__TurnAround,
+		s_p_atk_00,
+		s_p_atk_01,
+		s_p_atk_02,
+		s_p_roll_land,
+		s_p_roll_land_back,
+		s_p_jump,
+		s_p_jump_fall,
+		s_p_fall,
+		s_p_wall_hang,
+		s_p_wall_climb,
+		s_p_swing,
+		s_p_slide,
+		s_p_roll_throw,
+		s_p_atk_air_00,
+		s_p_atk_air_01,
+		s_p_atk_air_02,
+		s_p_atk_air_02_fall,
+		s_p_atk_air_02_land,
+		s_p_hit]
+
+#endregion
+
+sh_texel_handle	= shader_get_uniform(sh_outline, "in_texel")

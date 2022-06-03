@@ -7,9 +7,9 @@
   "edgeFiltering": false,
   "collisionTolerance": 0,
   "swfPrecision": 2.525,
-  "bbox_left": 39,
-  "bbox_right": 67,
-  "bbox_top": 42,
+  "bbox_left": 40,
+  "bbox_right": 66,
+  "bbox_top": 43,
   "bbox_bottom": 78,
   "HTile": false,
   "VTile": false,
@@ -24,12 +24,12 @@
   "gridX": 0,
   "gridY": 0,
   "frames": [
-    {"compositeImage":{"FrameId":{"name":"01ee20f2-ee99-4fa5-a229-ee390501befc","path":"sprites/__JumpFallInbetween/__JumpFallInbetween.yy",},"LayerId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},"images":[
-        {"FrameId":{"name":"01ee20f2-ee99-4fa5-a229-ee390501befc","path":"sprites/__JumpFallInbetween/__JumpFallInbetween.yy",},"LayerId":{"name":"57bcad58-7266-41de-8856-86a5c653ae7e","path":"sprites/__JumpFallInbetween/__JumpFallInbetween.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
-      ],"parent":{"name":"__JumpFallInbetween","path":"sprites/__JumpFallInbetween/__JumpFallInbetween.yy",},"resourceVersion":"1.0","name":"01ee20f2-ee99-4fa5-a229-ee390501befc","tags":[],"resourceType":"GMSpriteFrame",},
-    {"compositeImage":{"FrameId":{"name":"2a141e32-bdad-414d-84d2-2e50c87e0b80","path":"sprites/__JumpFallInbetween/__JumpFallInbetween.yy",},"LayerId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},"images":[
-        {"FrameId":{"name":"2a141e32-bdad-414d-84d2-2e50c87e0b80","path":"sprites/__JumpFallInbetween/__JumpFallInbetween.yy",},"LayerId":{"name":"57bcad58-7266-41de-8856-86a5c653ae7e","path":"sprites/__JumpFallInbetween/__JumpFallInbetween.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
-      ],"parent":{"name":"__JumpFallInbetween","path":"sprites/__JumpFallInbetween/__JumpFallInbetween.yy",},"resourceVersion":"1.0","name":"2a141e32-bdad-414d-84d2-2e50c87e0b80","tags":[],"resourceType":"GMSpriteFrame",},
+    {"compositeImage":{"FrameId":{"name":"e1923aa5-5f94-4758-ac33-565cc6a050c8","path":"sprites/__JumpFallInbetween/__JumpFallInbetween.yy",},"LayerId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},"images":[
+        {"FrameId":{"name":"e1923aa5-5f94-4758-ac33-565cc6a050c8","path":"sprites/__JumpFallInbetween/__JumpFallInbetween.yy",},"LayerId":{"name":"76b350ff-6e08-4450-8a89-f86d81c4a71a","path":"sprites/__JumpFallInbetween/__JumpFallInbetween.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
+      ],"parent":{"name":"__JumpFallInbetween","path":"sprites/__JumpFallInbetween/__JumpFallInbetween.yy",},"resourceVersion":"1.0","name":"e1923aa5-5f94-4758-ac33-565cc6a050c8","tags":[],"resourceType":"GMSpriteFrame",},
+    {"compositeImage":{"FrameId":{"name":"bda5debe-8bd0-4031-a287-b35c469aff53","path":"sprites/__JumpFallInbetween/__JumpFallInbetween.yy",},"LayerId":null,"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},"images":[
+        {"FrameId":{"name":"bda5debe-8bd0-4031-a287-b35c469aff53","path":"sprites/__JumpFallInbetween/__JumpFallInbetween.yy",},"LayerId":{"name":"76b350ff-6e08-4450-8a89-f86d81c4a71a","path":"sprites/__JumpFallInbetween/__JumpFallInbetween.yy",},"resourceVersion":"1.0","name":"","tags":[],"resourceType":"GMSpriteBitmap",},
+      ],"parent":{"name":"__JumpFallInbetween","path":"sprites/__JumpFallInbetween/__JumpFallInbetween.yy",},"resourceVersion":"1.0","name":"bda5debe-8bd0-4031-a287-b35c469aff53","tags":[],"resourceType":"GMSpriteFrame",},
   ],
   "sequence": {
     "spriteId": {"name":"__JumpFallInbetween","path":"sprites/__JumpFallInbetween/__JumpFallInbetween.yy",},
@@ -44,8 +44,8 @@
     "moments": {"Keyframes":[],"resourceVersion":"1.0","resourceType":"KeyframeStore<MomentsEventKeyframe>",},
     "tracks": [
       {"name":"frames","spriteId":null,"keyframes":{"Keyframes":[
-            {"id":"62f38018-73e3-4ff0-a477-e85cf0f02be7","Key":0.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"01ee20f2-ee99-4fa5-a229-ee390501befc","path":"sprites/__JumpFallInbetween/__JumpFallInbetween.yy",},"resourceVersion":"1.0","resourceType":"SpriteFrameKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<SpriteFrameKeyframe>",},
-            {"id":"609aa484-2cf9-4ad8-bf33-4dce8c544a20","Key":1.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"2a141e32-bdad-414d-84d2-2e50c87e0b80","path":"sprites/__JumpFallInbetween/__JumpFallInbetween.yy",},"resourceVersion":"1.0","resourceType":"SpriteFrameKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<SpriteFrameKeyframe>",},
+            {"id":"63d1807d-2f1a-44fa-9eb9-1b95c8327ac7","Key":0.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"e1923aa5-5f94-4758-ac33-565cc6a050c8","path":"sprites/__JumpFallInbetween/__JumpFallInbetween.yy",},"resourceVersion":"1.0","resourceType":"SpriteFrameKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<SpriteFrameKeyframe>",},
+            {"id":"ce3f67a9-30ab-4059-ac40-734e1e928607","Key":1.0,"Length":1.0,"Stretch":false,"Disabled":false,"IsCreationKey":false,"Channels":{"0":{"Id":{"name":"bda5debe-8bd0-4031-a287-b35c469aff53","path":"sprites/__JumpFallInbetween/__JumpFallInbetween.yy",},"resourceVersion":"1.0","resourceType":"SpriteFrameKeyframe",},},"resourceVersion":"1.0","resourceType":"Keyframe<SpriteFrameKeyframe>",},
           ],"resourceVersion":"1.0","resourceType":"KeyframeStore<SpriteFrameKeyframe>",},"trackColour":0,"inheritsTrackColour":true,"builtinName":0,"traits":0,"interpolation":1,"tracks":[],"events":[],"isCreationTrack":false,"resourceVersion":"1.0","tags":[],"resourceType":"GMSpriteFramesTrack","modifiers":[],},
     ],
     "visibleRange": null,
@@ -69,12 +69,12 @@
     "resourceType": "GMSequence",
   },
   "layers": [
-    {"visible":true,"isLocked":false,"blendMode":0,"opacity":100.0,"displayName":"default","resourceVersion":"1.0","name":"57bcad58-7266-41de-8856-86a5c653ae7e","tags":[],"resourceType":"GMImageLayer",},
+    {"visible":true,"isLocked":false,"blendMode":0,"opacity":100.0,"displayName":"default","resourceVersion":"1.0","name":"76b350ff-6e08-4450-8a89-f86d81c4a71a","tags":[],"resourceType":"GMImageLayer",},
   ],
   "nineSlice": null,
   "parent": {
-    "name": "Shaders",
-    "path": "folders/Shaders.yy",
+    "name": "New Player",
+    "path": "folders/New Player.yy",
   },
   "resourceVersion": "1.0",
   "name": "__JumpFallInbetween",

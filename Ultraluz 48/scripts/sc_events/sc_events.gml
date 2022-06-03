@@ -21,9 +21,9 @@ function event_p_jump() {
 		jumped	= true
 	}
 	
+	if key_jump_r && spd[v] < 0 spd[v] *= .5
+	
 }
-
-
 
 function event_p_dash() {
 	if key_dash {
@@ -34,13 +34,13 @@ function event_p_dash() {
 			hinput_prev *= -1
 			spd_push[h]	= -dash_spd*hdir
 			state		= p_st.dash_back
-			sprite_index	= s_p_roll_land64
+			sprite_index	= spr[p_sp.roll_land_back]
 		} else {
 			image_index	= 0
 			spd[h]		= 0
 			spd_push[h]	= dash_spd*hdir
 			state		= p_st.dash
-			sprite_index	= s_p_roll_land
+			sprite_index	= spr[p_sp.roll_land]
 		}
 	} return key_dash
 	
@@ -89,7 +89,7 @@ function event_p_attack() {
 			state		= p_st.atk_00 + coyote_atk_i
 		} else {
 			state		= p_st.atk_00
-			sprite_index	= s_p_atk_00
+			sprite_index	= spr[p_sp.atk_00]
 		}
 		image_index	= 0
 	} return key_atk
@@ -98,7 +98,7 @@ function event_p_attack() {
 function event_p_attack_air() {
 	if key_atk {
 		timer[1]	= HITBOX_TIMER
-		sprite_index	= s_p_atk_air_02
+		sprite_index	= spr[p_sp.atk_air_02]
 		state		= p_st.atk_air_02
 		image_index	= 0
 	} return key_atk
@@ -107,6 +107,9 @@ function event_p_attack_air() {
 
 function event_p_collision() {
 	repeat (abs(spd_final[h]*COL_TIME)*game_spd) {
+		if place_meeting(x+sign(spd_final[h]),y,o_solid) && !place_meeting(x+sign(spd_final[h]),y-1,o_solid) y--
+		
+
 		if place_meeting(x+sign(spd_final[h]),y,o_solid) {
 			if state	== p_st.swing {
 				rope_angle	= point_direction(grapple[h],grapple[v],x,y)
@@ -119,15 +122,19 @@ function event_p_collision() {
 
 	repeat (abs(spd_final[v]*COL_TIME)*game_spd) {
 		if place_meeting(x,y+sign(spd_final[v]),o_solid) {
-			
+			spd[v]	= 0
 			if state	== p_st.swing {
 				rope_angle	= point_direction(grapple[h],grapple[v],x,y)
 				rope_angle_spd	= 0
 			}
-			spd[v]	= 0
 			break
-		}  else y += sign(spd_final[v])/COL_TIME
+		}  else {
+			y += sign(spd_final[v])/COL_TIME
+		}
 	}
+
+	
+	
 }
 
 #endregion
@@ -139,6 +146,10 @@ function event_gravity(_fall_st = false) {
 			if spd[v] < 0 state = p_st.jump_fall
 		}
 		spd[v]	= approach(spd[v],spd_max[v],spd_acc[v])
+	}
+	
+	if place_meeting(x,y+1,o_slope) && !key_jump {
+		spd[v]	= 0
 	}
 }
 
