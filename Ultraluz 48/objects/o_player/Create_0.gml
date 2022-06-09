@@ -649,7 +649,8 @@ enum p_sp {
 	atk_air_02,
 	atk_air_02_fall,
 	atk_air_02_land,
-	hit
+	hit,
+	num
 }
 
 /*
@@ -677,28 +678,11 @@ spr	= [	s_p_idle44,
 		s_p_hit]
 */
 
-spr	= [	__Idle,
-		__Run,
-		__TurnAround,
-		s_p_atk_00,
-		s_p_atk_01,
-		s_p_atk_02,
-		s_p_roll_land,
-		s_p_roll_land_back,
-		s_p_jump,
-		s_p_jump_fall,
-		s_p_fall,
-		s_p_wall_hang,
-		s_p_wall_climb,
-		s_p_swing,
-		s_p_slide,
-		s_p_roll_throw,
-		s_p_atk_air_00,
-		s_p_atk_air_01,
-		s_p_atk_air_02,
-		s_p_atk_air_02_fall,
-		s_p_atk_air_02_land,
-		s_p_hit]
+		
+spr[0]	= idle
+for (var i = 1; i < p_sp.num; ++i) {
+	spr[i] = walk
+}
 
 #endregion
 
